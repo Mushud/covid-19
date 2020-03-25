@@ -1,179 +1,157 @@
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import * as WebBrowser from 'expo-web-browser';
+import {View, ScrollView, Image, Text, TouchableOpacity, ImageBackground, FlatList} from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import {RFValue} from "react-native-responsive-fontsize";
+import styled from "styled-components";
+import Colors from "../constants/Colors";
+import { homeItemsList } from './data';
 
-import { MonoText } from '../components/StyledText';
+const situationList = [
+  {
+    header: "",
+    content: "",
+  },
+    {
+        header: "",
+        content: "",
+    },
+    {
+        header: "",
+        content: "",
+    }
+];
 
-export default function HomeScreen() {
+const HomeScreen = ({ navigation }) => {
+
+
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={
-              __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
-            }
-            style={styles.welcomeImage}
-          />
-        </View>
-
-        <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
-
-          <Text style={styles.getStartedText}>Open up the code for this screen:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            <MonoText>screens/HomeScreen.js</MonoText>
-          </View>
-
-          <Text style={styles.getStartedText}>
-            Change any of the text, save the file, and your app will automatically reload.
+    <View style={{ flex: 1, marginBottom: 400}}>
+      <View style={{ backgroundColor: "white",}}>
+        <View style={{ marginTop: 50, paddingHorizontal: 20, marginBottom: 0}}>
+          <Text style={{ fontFamily: "bold", fontSize: 22}}>
+            Live Information + Statistics
+          </Text>
+          <Text style={{ fontFamily: "regular"}}>
+            From Ghana Health Services
           </Text>
         </View>
-
-        <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-          </TouchableOpacity>
+      </View>
+      <View style={{ height: 230, backgroundColor: "#ffffff", }}>
+        <View>
+          <View
+              style={{
+                marginTop: 10,
+                height: 210,
+              }}
+          >
+            <FlatList
+                style={{ paddingLeft: 20 }}
+                data={homeItemsList}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                renderItem={HomeItemCard}
+                keyExtractor={item => item._id}
+            />
+          </View>
         </View>
-      </ScrollView>
-
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-        <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
+      </View>
+      <View>
+        <View style={{ marginTop: 20, paddingHorizontal: 20, marginBottom: 0}}>
+          <Text style={{ fontFamily: "bold", fontSize: 22}}>
+            Ghana's Situation Updates
+          </Text>
+          <Text style={{ fontFamily: "regular"}}>
+            Last Updated : { new Date().toLocaleDateString()}
+          </Text>
         </View>
+        <ScrollView
+            style={{
+              marginTop: 10,
+            }}
+        >
+          <FlatList
+              data={situationList}
+              showsHorizontalScrollIndicator={false}
+              renderItem={SituationItemCard}
+              keyExtractor={item => item._id}
+              contentContainerStyle={{ height: "100%"}}
+          />
+        </ScrollView>
+
       </View>
     </View>
   );
-}
-
-HomeScreen.navigationOptions = {
-  header: null,
-};
-
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
-
+  function HomeItemCard({ item }) {
     return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
+          <HomeItemContainer>
+            <ImageBackground
+                source={item.bg}
+                imageStyle={{ borderRadius: 10, opacity: 0.4 }}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: "#000000",
+                  borderRadius: 10,
+                }}
+            >
+              <View style={{ alignItems: "space-between", paddingRight: 20, paddingTop: 10}}>
+                <Text
+                    style={{
+                      fontSize: 45,
+                      fontFamily: 'bold',
+                      color: '#ffffff',
+                    }}
+                >
+                  {item.content}
+                </Text>
+                <Text style={{ color: "#ffffff", fontFamily: "bold" }}>
+                  {item.title}
+                </Text>
+              </View>
+            </ImageBackground>
+          </HomeItemContainer>
     );
   }
-}
 
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-}
+  function SituationItemCard({ item }) {
+    return (
+        <View style={{ backgroundColor: "white", borderRadius: 10, paddingHorizontal: 20, paddingVertical: 20, marginHorizontal: 20, marginBottom: 10 }}>
+          <View style={{ alignItems: "flex-start", borderBottomWidth: 0.5, borderBottomColor: "#e3e3e3" }}>
+            <Text style={{ fontFamily: 'bold', fontSize: 16, paddingBottom: 10}}>
+              Confirmed Covid-19 Cases In Ghana As At 25 March 2020, 09:00 Hr
+            </Text>
+          </View>
+          <View style={{ marginTop: 10}}>
+            <Text>
+              As at the morning of 25 March 2020, a total of sixty-eight (68) cases including two (2) deaths have been confirmed. Sixty-six (66) of these confirmed cases are being managed in isolation.
 
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-  );
-}
+              The sudden spike in case incidence is as a result of the mandatory quarantine and compulsory testing for all travelers entering Ghana, as directed by the president. Overall, 30 of the 68 cases have been reported in the general population with the remaining 38 cases among persons currently under mandatory quarantine. As of 24 March, total of 1,030 persons are under mandatory quarantine; samples from 863 of them have been tested and 38 confirmed positive.
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
-});
+              Great majority of the confirmed cases are Ghanaians, who returned home from affected countries. Seven (7) are of other nationalities namely: Norway, Lebanon, China and UK.
+
+              In respect of contact tracing, a total of 829 contacts have been identified and are being tracked.
+
+              Total of 826 contacts have been enlisted and being tracked. Nineteen (19) people have completed the 14 days of mandatory follow up.
+            </Text>
+          </View>
+        </View>
+    );
+  }
+};
+
+
+const HomeItemContainer = styled.View`
+  box-shadow: 0px 12px 5px rgba(213, 213, 213, 0.5);
+  background: white;
+  height: 180px;
+  width: 320px;
+  border-radius: 10px;
+  margin: 10px 20px 10px 0px;
+  align-items: center;
+`;
+
+const FloatingMenu = styled.View`
+  box-shadow: 0px 10px 10px rgba(213, 213, 213, 0.5);
+`;
+
+export default HomeScreen;

@@ -8,7 +8,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
-import AppealScreen from "./screens/onboarding/AppealScreen";
+import Index from "./screens/onboarding/Index";
+import CountrySelection from "./screens/onboarding/CountrySelection";
+import PersonalDetails from "./screens/onboarding/PersonalDetails";
+import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -53,9 +56,12 @@ export default function App(props) {
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>
-            <Stack.Screen name="AppealScreen" component={AppealScreen}/>
-            {/*<Stack.Screen name="Root" component={BottomTabNavigator} />*/}
+          <Stack.Navigator headerMode="none">
+            <Stack.Screen name="AppealScreen" component={Index}/>
+            <Stack.Screen name="CountrySelection" component={CountrySelection}/>
+            <Stack.Screen name="PersonalDetails" component={PersonalDetails}/>
+            {/*<Stack.Screen name="Home" component={HomeScreen}/>*/}
+            <Stack.Screen name="Home" component={BottomTabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
