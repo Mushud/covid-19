@@ -69,12 +69,16 @@ export default function App(props) {
           <NotificationProvider>
             <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
               <Stack.Navigator headerMode="none">
-                <Stack.Screen name="CountrySelection" component={CountrySelection} />
-                <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
-                <Stack.Screen name="VerifyScreen" component={VerifyScreen} />
-                <Stack.Screen name="AppealScreen" component={Index} />
-                <Stack.Screen name="Home" component={BottomTabNavigator} />
-                {/*<Stack.Screen name="Home" component={HomeScreen}/>*/}
+                {!authToken ? (
+                  <>
+                    <Stack.Screen name="CountrySelection" component={CountrySelection} />
+                    <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
+                    <Stack.Screen name="VerifyScreen" component={VerifyScreen} />
+                    <Stack.Screen name="AppealScreen" component={Index} />
+                  </>
+                ) : (
+                  <Stack.Screen name="Home" component={BottomTabNavigator} />
+                )}
               </Stack.Navigator>
             </NavigationContainer>
           </NotificationProvider>
