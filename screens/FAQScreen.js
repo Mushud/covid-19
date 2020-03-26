@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {View, ScrollView, Text, Linking, TouchableOpacity} from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import Hyperlink from 'react-native-hyperlink';
-
+import { deleteAuthToken } from '../utils';
 import styled from "styled-components";
 import { homeItemsList } from './data';
 import TabBarIcon from '../components/TabBarIcon';
@@ -193,12 +193,11 @@ const FAQScreen = ({ navigation }) => {
       <View style={{ flex: 1}}>
         <View style={{ backgroundColor: "white", flexDirection: 'row'}}>
           <View style={{ marginTop: 50, paddingHorizontal: 20, marginBottom: 0, flex: 0.9}}>
-            <Text style={{ fontFamily: "bold", fontSize: 18}}>
-              Frequently Asked Questions
-            </Text>
+            <TouchableOpacity onLongPress={() => deleteAuthToken()}>
             <Text style={{ fontFamily: "regular"}}>
               From World Health Organization
             </Text>
+            </TouchableOpacity>
           </View>
           <View style={{marginTop: 50, flex: 0.1}}>
             <TouchableOpacity onPress={openNotificationScreen}>

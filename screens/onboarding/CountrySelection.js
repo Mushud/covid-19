@@ -8,11 +8,11 @@ import CustomDatePicker from '../../components/shared/DatePickerInput';
 import Button from '../../components/shared/Button';
 
 const CountrySelection = ({ navigation }) => {
-  const [date, setDate] = React.useState('Select Arrival Date');
+  const [date, setDate] = React.useState(new Date());
   const [show, setShow] = React.useState(false);
 
-  const [countryOne, setCountryOne] = useState(null);
-  const [countryTwo, setCountryTwo] = useState(null);
+  const [countryOne, setCountryOne] = useState('Ghana');
+  const [countryTwo, setCountryTwo] = useState('Ghana');
   const [countryOneCode, setCountryOneCode] = useState('GH');
   const [countryTwoCode, setCountryTwoCode] = useState('GH');
 
@@ -126,10 +126,7 @@ const CountrySelection = ({ navigation }) => {
           )}
         </FormContainer>
         <FormContainer style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-          <TouchableOpacity
-            style={{ flex: 0.48 }}
-            onPress={() => navigation.navigate('PersonalDetails')}
-          >
+          <TouchableOpacity style={{ flex: 0.48 }} onPress={onPressNext}>
             <Button
               style={{
                 marginHorizontal: 0,
@@ -167,7 +164,7 @@ const CountrySelection = ({ navigation }) => {
     });
     await AsyncStorage.setItem('travellingDetails', travellingDetails);
     await AsyncStorage.setItem('syncStatus', JSON.stringify(false));
-    navigation.navigate('PersonalDetails');
+    navigation.navigate('Home');
   }
 };
 

@@ -2,7 +2,7 @@
 const homeItemsList = [
   {
     title: 'Confirmed Cases',
-    content: '123,467',
+    content: '132',
     key: 'Prayer Requests',
     link: 'PrayerRequests',
     bg: require("../assets/images/use-covid.jpeg")
@@ -16,7 +16,7 @@ const homeItemsList = [
   },
   {
     title: 'Deaths',
-    content: '2',
+    content: '4',
     key: 'death',
     link: 'Notifications',
     bg: require("../assets/images/death.jpeg")
