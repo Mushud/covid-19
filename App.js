@@ -5,13 +5,13 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { NotificationProvider } from "./context/Notification";
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import Index from "./screens/onboarding/Index";
 import CountrySelection from "./screens/onboarding/CountrySelection";
 import PersonalDetails from "./screens/onboarding/PersonalDetails";
-import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -55,15 +55,20 @@ export default function App(props) {
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+        <NotificationProvider>
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <Stack.Navigator headerMode="none">
+            <Stack.Screen name="PersonalDetails" component={PersonalDetails}/>
+
+              <Stack.Screen name="Home" component={BottomTabNavigator} />
+
             <Stack.Screen name="AppealScreen" component={Index}/>
             <Stack.Screen name="CountrySelection" component={CountrySelection}/>
-            <Stack.Screen name="PersonalDetails" component={PersonalDetails}/>
             {/*<Stack.Screen name="Home" component={HomeScreen}/>*/}
-            <Stack.Screen name="Home" component={BottomTabNavigator} />
+
           </Stack.Navigator>
         </NavigationContainer>
+      </NotificationProvider>
       </View>
     );
   }

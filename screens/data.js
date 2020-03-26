@@ -10,14 +10,14 @@ const homeItemsList = [
   {
     title: 'Recovered',
     content: '0',
-    key: 'Previous Sermons',
+    key: 'recovery',
     link: 'PreviousSermons',
     bg: require("../assets/images/use-covid-2.jpeg")
   },
   {
     title: 'Deaths',
     content: '2',
-    key: 'Payments',
+    key: 'death',
     link: 'Notifications',
     bg: require("../assets/images/death.jpeg")
   },

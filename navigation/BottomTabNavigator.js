@@ -2,7 +2,9 @@ import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import FAQScreen from '../screens/FAQScreen';
+import ReportCase from "../screens/ReportCase";
+import LogScreen from "../screens/LogScreen";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -25,28 +27,28 @@ export default function BottomTabNavigator({ navigation, route }) {
       />
         <BottomTab.Screen
             name="Report"
-            component={HomeScreen}
+            component={ReportCase}
             options={{
                 title: 'Report',
-                tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-megaphone" />,
+                tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-paper-plane" />,
             }}
         />
         <BottomTab.Screen
             name="Vitals"
-            component={HomeScreen}
+            component={LogScreen}
             options={{
                 title: 'Health',
-                tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-heart" />,
+                tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-pulse" />,
             }}
         />
-      <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
-        options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-mail" />,
-        }}
-      />
+        <BottomTab.Screen
+            name="FAQScreen"
+            component={FAQScreen}
+            options={{
+                title: 'FAQs',
+                tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-radio" />,
+            }}
+        />
     </BottomTab.Navigator>
   );
 }

@@ -9,6 +9,8 @@ const PersonalDetails = ({ navigation }) => {
     const [surname, setSurname] = useState('');
     const [othernames, setOthernames] = useState('');
     const [phone, setPhone] = useState('');
+    const [age, setAge] = useState('');
+    const [nationalID, setNationalID] = useState('');
     return(
         <ScrollView showsVerticalScrollIndicator={false}>
             <PersonalDetailsContainer>
@@ -25,6 +27,14 @@ const PersonalDetails = ({ navigation }) => {
                     </View>
                     <View style={{ flex: 0.55, marginLeft: 5 }}>
                         <Input value={othernames} onChangeText={setOthernames} placeholder="Othernames" />
+                    </View>
+                </View>
+                <View style={{ flexDirection: 'row', flex: 1, }}>
+                    <View style={{ flex: 0.65, marginRight: 5 }}>
+                        <Input value={nationalID} onChangeText={setNationalID} placeholder="National ID" />
+                    </View>
+                    <View style={{ flex: 0.35, marginLeft: 5 }}>
+                        <Input value={age} onChangeText={setAge} placeholder="Age" />
                     </View>
                 </View>
                 <View >

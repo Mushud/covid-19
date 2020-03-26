@@ -1,10 +1,10 @@
-import * as React from 'react';
-import {View, ScrollView, Image, Text, TouchableOpacity, ImageBackground, FlatList} from 'react-native';
-import { Ionicons } from "@expo/vector-icons";
-import {RFValue} from "react-native-responsive-fontsize";
+import React, { useContext } from 'react';
+import {View, ScrollView, Text, ImageBackground, FlatList, TouchableOpacity} from 'react-native';
+
 import styled from "styled-components";
-import Colors from "../constants/Colors";
 import { homeItemsList } from './data';
+import TabBarIcon from '../components/TabBarIcon';
+import { NotificationContext } from "../context/Notification";
 
 const situationList = [
   {
@@ -23,11 +23,12 @@ const situationList = [
 
 const HomeScreen = ({ navigation }) => {
 
+    const { openNotificationScreen } = useContext(NotificationContext);
 
   return (
     <View style={{ flex: 1, marginBottom: 400}}>
-      <View style={{ backgroundColor: "white",}}>
-        <View style={{ marginTop: 50, paddingHorizontal: 20, marginBottom: 0}}>
+      <View style={{ backgroundColor: "white", flexDirection: 'row'}}>
+        <View style={{ marginTop: 50, paddingHorizontal: 20, marginBottom: 0, flex: 0.9}}>
           <Text style={{ fontFamily: "bold", fontSize: 22}}>
             Live Information + Statistics
           </Text>
@@ -35,6 +36,12 @@ const HomeScreen = ({ navigation }) => {
             From Ghana Health Services
           </Text>
         </View>
+          <View style={{marginTop: 50, flex: 0.1}}>
+              <TouchableOpacity onPress={openNotificationScreen}>
+                <TabBarIcon focused={true} color="#718096" name="ios-notifications" size={27} />
+              </TouchableOpacity>
+          </View>
+
       </View>
       <View style={{ height: 230, backgroundColor: "#ffffff", }}>
         <View>
@@ -83,33 +90,35 @@ const HomeScreen = ({ navigation }) => {
   );
   function HomeItemCard({ item }) {
     return (
-          <HomeItemContainer>
-            <ImageBackground
-                source={item.bg}
-                imageStyle={{ borderRadius: 10, opacity: 0.4 }}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: "#000000",
-                  borderRadius: 10,
-                }}
-            >
-              <View style={{ alignItems: "space-between", paddingRight: 20, paddingTop: 10}}>
-                <Text
-                    style={{
-                      fontSize: 45,
-                      fontFamily: 'bold',
-                      color: '#ffffff',
-                    }}
-                >
-                  {item.content}
-                </Text>
-                <Text style={{ color: "#ffffff", fontFamily: "bold" }}>
-                  {item.title}
-                </Text>
-              </View>
-            </ImageBackground>
-          </HomeItemContainer>
+          <View style={{ paddingRight: item.key === 'death' ? 20 : 0 }}>
+              <HomeItemContainer>
+                  <ImageBackground
+                      source={item.bg}
+                      imageStyle={{ borderRadius: 10, opacity: 0.4 }}
+                      style={{
+                          width: '100%',
+                          height: '100%',
+                          backgroundColor: "#000000",
+                          borderRadius: 10,
+                      }}
+                  >
+                      <View style={{ alignItems: "space-between", paddingRight: 20, paddingTop: 10}}>
+                          <Text
+                              style={{
+                                  fontSize: 45,
+                                  fontFamily: 'bold',
+                                  color: '#ffffff',
+                              }}
+                          >
+                              {item.content}
+                          </Text>
+                          <Text style={{ color: "#ffffff", fontFamily: "bold" }}>
+                              {item.title}
+                          </Text>
+                      </View>
+                  </ImageBackground>
+              </HomeItemContainer>
+          </View>
     );
   }
 

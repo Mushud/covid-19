@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Tab Navigation Template",
-    "slug": "ndc-covid-mobile",
+    "name": "Contact Tracing Solution",
+    "slug": "ghs-covid-mobile",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -25,7 +25,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.polymorphlabs.covid",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.polymorphlabs.covid",
+      "versionCode": 1
     }
   }
 }
