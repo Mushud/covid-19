@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, TouchableOpacity } from "react-native";
 import { StyledHeader, StyledText } from "../../components/Typography";
-import Button from "../../components/FormInput/Button";
+import Button from "../../components/shared/Button";
 import { gql, useMutation } from "@apollo/client";
 import { showMessage } from "react-native-flash-message";
 import * as Permissions from "expo-permissions";
