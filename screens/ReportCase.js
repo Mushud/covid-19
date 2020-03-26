@@ -1,22 +1,66 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { View, Text, ScrollView, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import Input from '../components/shared/Input';
 import Button from '../components/shared/Button';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import KeyboardAwareScrollView from 'react-native-keyboard-aware-scrollview';
+import { useMutation, gql } from '@apollo/client';
+
+const reportCaseMutation = gql`
+  mutation(
+    $alternateContact: String
+    $description: String
+    $location: String
+    $nearestLandmark: String
+    $reporting: reporting
+  ) {
+    reportCase(
+      input: {
+        alternateContact: $alternateContact
+        description: $description
+        location: $location
+        nearestLandmark: $nearestLandmark
+        reporting: $reporting
+      }
+    ) {
+      description
+    }
+  }
+`;
 
 const options = [
   { title: 'Self', value: 'self' },
   { title: 'Other Individual', value: 'other' },
 ];
 
-const ReportCase = ({ navigation }) => {
+const ReportCase = () => {
   const [person, setPerson] = useState('self');
   const [landmark, setLandmark] = useState('');
   const [location, setLocation] = useState('');
   const [phone, setPhone] = useState('');
+  const [description, setDescription] = useState('');
+
+  const [reportCase, { loading }] = useMutation(reportCaseMutation, {
+    variables: {
+      reporting: person,
+      nearestLandmark: landmark,
+      location,
+      alternateContact: phone,
+      description,
+    },
+    onCompleted: () => {
+      Alert.alert('Success', 'Your report has been made successfully');
+      setPerson('self');
+      setLandmark('');
+      setLocation('');
+      setPhone('');
+      setDescription('');
+    },
+    onError: () => {
+      Alert.alert('Error', 'Failed to make report');
+    },
+  });
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -58,12 +102,7 @@ const ReportCase = ({ navigation }) => {
         </View>
         <View style={{ marginTop: 10 }}>
           <Text style={{ fontFamily: 'bold', paddingLeft: 5 }}>Location or Digital Address</Text>
-          <Input
-            value={location}
-            onChangeText={setLocation}
-            placeholder="eg. GA-492-74"
-            keyboardType="numeric"
-          />
+          <Input value={location} onChangeText={setLocation} placeholder="eg. GA-492-74" />
         </View>
 
         <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -103,11 +142,14 @@ const ReportCase = ({ navigation }) => {
             placeholder="Type something"
             numberOfLines={5}
             multiline={true}
+            value={description}
+            onChangeText={setDescription}
           />
         </View>
         <FormContainer style={{ marginTop: 0 }}>
-          <TouchableOpacity style={{ flex: 0.48 }} onPressIn={() => navigation.navigate('Home')}>
+          <TouchableOpacity style={{ flex: 0.48 }} onPressIn={reportCase}>
             <Button
+              loading={loading}
               style={{
                 marginHorizontal: 0,
                 backgroundColor: '#73afff',
