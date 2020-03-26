@@ -16,6 +16,7 @@ import Index from './screens/onboarding/Index';
 import CountrySelection from './screens/onboarding/CountrySelection';
 import PersonalDetails from './screens/onboarding/PersonalDetails';
 import VerifyScreen from './screens/Verification';
+import InformationScreen from './screens/onboarding/Information';
 
 const Stack = createStackNavigator();
 
@@ -69,10 +70,11 @@ export default function App(props) {
           <NotificationProvider>
             <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
               <Stack.Navigator headerMode="none">
+                <Stack.Screen name="AppealScreen" component={Index} />
+                <Stack.Screen name="InformationScreen" component={InformationScreen} />
                 <Stack.Screen name="CountrySelection" component={CountrySelection} />
                 <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
                 <Stack.Screen name="VerifyScreen" component={VerifyScreen} />
-                <Stack.Screen name="AppealScreen" component={Index} />
                 <Stack.Screen name="Home" component={BottomTabNavigator} />
                 {/*<Stack.Screen name="Home" component={HomeScreen}/>*/}
               </Stack.Navigator>

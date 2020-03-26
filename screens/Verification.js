@@ -30,7 +30,7 @@ function VerifyScreen({ navigation, route }) {
     },
     onCompleted: async ({ validateLoginUser }) => {
       await saveAuthToken(validateLoginUser.mobileToken);
-      navigation.navigate('Home');
+      navigation.navigate('CountrySelection');
     },
   });
   return (

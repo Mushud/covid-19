@@ -68,11 +68,11 @@ const PersonalDetails = ({ navigation }) => {
             <Input value={nationalID} onChangeText={setNationalID} placeholder="National ID" />
           </View>
           <View style={{ flex: 0.35, marginLeft: 5 }}>
-            <Input value={age} onChangeText={setAge} placeholder="Age" />
+            <Input value={age} onChangeText={setAge} placeholder="Age" keyboardType="numeric"/>
           </View>
         </View>
         <View>
-          <Input value={phone} onChangeText={setPhone} placeholder="Contact Number" />
+          <Input value={phone} onChangeText={setPhone} placeholder="Contact Number" keyboardType="numeric" />
         </View>
         <FormContainer style={{ marginTop: 0 }}>
           <TouchableOpacity style={{ flex: 0.48 }} onPressIn={loginUser}>
