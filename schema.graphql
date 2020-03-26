@@ -1,0 +1,129 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Location {
+    coordinates: [Float]
+}
+
+type LoginUserOutput {
+    message: String!
+    success: Boolean!
+}
+
+type MobileToken {
+    createdAt: DateTime!
+    mobileToken: String!
+    newUser: Boolean!
+    updatedAt: DateTime!
+    user: User
+}
+
+type Mutation {
+    loginUser(input: loginUserInput): LoginUserOutput!
+    onboardNewUser(input: onboardNewUserInput!): User
+    recordVitals(input: recordVitalsInput): Vitals
+    root: String
+    setMemberNotificationToken(input: setUserNotificationTokenInput): SetUserNotificationTokenOutput!
+    validateLoginUser(input: validateLoginUserInput): MobileToken!
+}
+
+type Query {
+    memberProfile: User!
+    root: String
+}
+
+type SetUserNotificationTokenOutput {
+    success: Boolean!
+    user: User!
+}
+
+type User {
+    age: Int
+    arrivalDate: Date
+    bluetoothID: String
+    lastCountriesVisited: [String]
+    lastName: String
+    notificationToken: String
+    otherNames: String
+    phone: PhoneNumber
+}
+
+type Vitals {
+    location: Location
+    user: User
+    vitals: VitalsDetails
+}
+
+type VitalsDetails {
+    aches: Int
+    dryCough: Int
+    fever: Int
+    shortnessOfBreath: Int
+    soreThroat: Int
+    tiredness: Int
+}
+
+enum CacheControlScope {
+    PRIVATE
+    PUBLIC
+}
+
+input LocationInput {
+    coordinates: [Float]
+}
+
+input VitalsInput {
+    aches: Int
+    dryCough: Int
+    fever: Int
+    shortnessOfBreath: Int
+    soreThroat: Int
+    tiredness: Int
+}
+
+input loginUserInput {
+    phone: String!
+}
+
+input onboardNewUserInput {
+    age: Int
+    arrivalDate: Date
+    bluetoothID: String
+    lastCountriesVisited: [String]
+    lastName: String
+    notificationToken: String
+    otherNames: String
+    phone: PhoneNumber
+}
+
+input recordVitalsInput {
+    location: LocationInput
+    vitals: VitalsInput
+}
+
+input setUserNotificationTokenInput {
+    notificationToken: String!
+}
+
+input validateLoginUserInput {
+    otp: String!
+    phone: String!
+}
+
+
+scalar Date
+
+scalar PhoneNumber
+
+scalar DateTime
+
+scalar EmailAddress
+
+scalar JSONObject
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload

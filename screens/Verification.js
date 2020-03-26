@@ -1,29 +1,36 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 import { StyledHeader, StyledText } from '../components/Typography';
 import Color from '../constants/Colors';
 import PinView from 'react-native-pin-view';
-import { useMutation } from '@apollo/client';
-import { validateLoginMember as validateLoginMemberMutation } from '../graphql/mutations';
+import { useMutation, gql } from '@apollo/client';
 import { showMessage } from 'react-native-flash-message';
 import MessageImage from '../assets/images/message.png';
 import { saveAuthToken } from '../utils';
 import { Ionicons } from '@expo/vector-icons';
 
+const validateLoginMutation = gql`
+  mutation($phone: String!, $otp: String!) {
+    validateLoginUser(input: { phone: $phone, otp: $otp }) {
+      mobileToken
+    }
+  }
+`;
+
 function VerifyScreen({ navigation, route }) {
-  const phone = navigation.getParam('phone');
-  const [validateLoginMember, { loading }] = useMutation(validateLoginMemberMutation, {
+  const phone = route.params.phone;
+  console.log('loooog', route.params);
+
+  const [validateLoginUser, { loading }] = useMutation(validateLoginMutation, {
     onError: ({ graphqlErrors }) => {
       showMessage({
         type: 'warning',
         message: 'Invalid PIN',
       });
     },
-    onCompleted: async ({ validateLoginMember }) => {
-      await saveAuthToken(validateLoginMember.mobileToken);
-      navigation.navigate('SignUp', {
-        phone: validateLoginMember.member.contact.primaryTelephone,
-      });
+    onCompleted: async ({ validateLoginUser }) => {
+      await saveAuthToken(validateLoginUser.mobileToken);
+      navigation.navigate('Home');
     },
   });
   return (
@@ -54,8 +61,8 @@ function VerifyScreen({ navigation, route }) {
           inputTextStyle={{ color: '#fff' }}
           buttonBgColor="#fff"
           deleteText={<Ionicons name="ios-backspace" size={25} />}
-          onComplete={otp => {
-            validateLoginMember({
+          onComplete={(otp) => {
+            validateLoginUser({
               variables: {
                 phone,
                 otp,
