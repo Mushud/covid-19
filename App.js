@@ -77,6 +77,7 @@ export default function App(props) {
                 <Stack.Screen name="VerifyScreen" component={VerifyScreen} />
                 <Stack.Screen name="Home" component={BottomTabNavigator} />
                 {/*<Stack.Screen name="Home" component={HomeScreen}/>*/}
+
               </Stack.Navigator>
             </NavigationContainer>
           </NotificationProvider>
