@@ -65,7 +65,7 @@ export default function App(props) {
   } else {
     return (
       <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
         <ApolloProvider client={graphqlClient}>
           <NotificationProvider>
             <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
@@ -77,7 +77,6 @@ export default function App(props) {
                 <Stack.Screen name="VerifyScreen" component={VerifyScreen} />
                 <Stack.Screen name="Home" component={BottomTabNavigator} />
                 {/*<Stack.Screen name="Home" component={HomeScreen}/>*/}
-
               </Stack.Navigator>
             </NavigationContainer>
           </NotificationProvider>

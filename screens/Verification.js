@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Image, ScrollView, View } from 'react-native';
 import { StyledHeader, StyledText } from '../components/Typography';
 import Color from '../constants/Colors';
