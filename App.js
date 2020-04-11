@@ -70,12 +70,12 @@ export default function App(props) {
           <NotificationProvider>
             <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
               <Stack.Navigator headerMode="none">
+                <Stack.Screen name="Home" component={BottomTabNavigator} />
+                <Stack.Screen name="CountrySelection" component={CountrySelection} />
                 <Stack.Screen name="AppealScreen" component={Index} />
                 <Stack.Screen name="InformationScreen" component={InformationScreen} />
-                <Stack.Screen name="CountrySelection" component={CountrySelection} />
                 <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
                 <Stack.Screen name="VerifyScreen" component={VerifyScreen} />
-                <Stack.Screen name="Home" component={BottomTabNavigator} />
                 {/*<Stack.Screen name="Home" component={HomeScreen}/>*/}
               </Stack.Navigator>
             </NavigationContainer>
