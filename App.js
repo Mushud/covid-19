@@ -8,14 +8,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NotificationProvider } from './context/Notification';
 import apolloClient from './graphql/client';
 import { ApolloProvider } from '@apollo/client';
-import { retrieveAuthToken } from './utils';
+import { deleteAuthToken, retrieveAuthToken } from './utils';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
-import Index from './screens/onboarding/Index';
-import CountrySelection from './screens/onboarding/CountrySelection';
-import PersonalDetails from './screens/onboarding/PersonalDetails';
-import VerifyScreen from './screens/Verification';
+import Login from './screens/onboarding/Login';
+import Verification from './screens/onboarding/Verification';
 import InformationScreen from './screens/onboarding/Information';
 
 const Stack = createStackNavigator();
@@ -70,13 +68,10 @@ export default function App(props) {
           <NotificationProvider>
             <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
               <Stack.Navigator headerMode="none">
+                {/*                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Verification" component={Verification} />
+                <Stack.Screen name="InformationScreen" component={InformationScreen} />*/}
                 <Stack.Screen name="Home" component={BottomTabNavigator} />
-                <Stack.Screen name="CountrySelection" component={CountrySelection} />
-                <Stack.Screen name="AppealScreen" component={Index} />
-                <Stack.Screen name="InformationScreen" component={InformationScreen} />
-                <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
-                <Stack.Screen name="VerifyScreen" component={VerifyScreen} />
-                {/*<Stack.Screen name="Home" component={HomeScreen}/>*/}
               </Stack.Navigator>
             </NavigationContainer>
           </NotificationProvider>

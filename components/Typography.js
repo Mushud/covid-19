@@ -1,5 +1,7 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, StyleSheet } from "react-native";
+import { human, material } from 'react-native-typography';
+
 
 const StyledText = props => {
   if (props.bible) {
@@ -101,11 +103,46 @@ const StyledSubtitleInverse = props => {
   );
 };
 
+const RegularText = ({ style = {}, size, ...restProps }) => {
+  return <Text {...restProps} style={[fontStyles[size], styles.regular, style]} />;
+};
+
+const BoldText = ({ style = {}, size, ...restProps }) => {
+  return <Text {...restProps} style={[fontStyles[size], styles.bold, style]} />;
+};
+
+RegularText.defaultProps = {
+  size: 'sm',
+};
+
+BoldText.defaultProps = {
+  size: 'sm',
+};
+
+const fontStyles = {
+  sm: Platform.OS === 'ios' ? human.body : material.body1,
+  md: Platform.OS === 'ios' ? human.headline : material.headline,
+  lg: Platform.OS === 'ios' ? human.largeTitle : material.display1,
+};
+
+const styles = StyleSheet.create({
+  regular: {
+    fontFamily: 'regular',
+  },
+
+  bold: {
+    fontFamily: 'bold',
+  },
+});
+
+
 export {
   StyledHeader,
   StyledText,
   StyledSubtitle,
   StyledHeaderInverse,
   StyledSubtitleInverse,
-  StyledTextInverse
+  StyledTextInverse,
+  BoldText,
+  RegularText
 };

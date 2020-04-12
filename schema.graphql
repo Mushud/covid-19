@@ -5,16 +5,36 @@ schema {
     mutation: Mutation
 }
 
+type AgeGroup {
+    from: Int
+    to: Int
+}
+
+type BroadcastMessage {
+    _id: ID
+    createdAt: DateTime
+    description: String
+    targetGroup: BroadcastMessageTargetGroup
+    title: String
+    updatedAt: DateTime
+}
+
+type BroadcastMessageTargetGroup {
+    ageGroup: AgeGroup
+    region: String
+}
+
 type CaseReport {
     alternateContact: String
     description: String
     location: String
     nearestLandmark: String
-    reporting: reporting
+    reporting: Reporting
     user: User
 }
 
 type Location {
+    "Coordinates is an array of lnglat"
     coordinates: [Float]
 }
 
@@ -32,19 +52,26 @@ type MobileToken {
 }
 
 type Mutation {
+    addTestingSite(input: addTestingSiteInput): TestingSite
+    editUserProfile(input: editUserProfileInput!): User
     loginUser(input: loginUserInput): LoginUserOutput!
-    onboardNewUser(input: onboardNewUserInput!): User
     recordVitals(input: recordVitalsInput): Vitals
     reportCase(input: reportCaseInput): CaseReport
     root: String
-    setMemberNotificationToken(input: setUserNotificationTokenInput): SetUserNotificationTokenOutput!
+    sendBroadcastMessage(input: broadcastMessageInput): BroadcastMessage
+    setUserNotificationToken(input: setUserNotificationTokenInput): SetUserNotificationTokenOutput!
     validateLoginUser(input: validateLoginUserInput): MobileToken!
 }
 
 type Query {
+    broadcastMessages(filter: broadcastMessageFilter): [BroadcastMessage]
     memberProfile: User!
+    reportedCases(filter: caseReportFilter): [CaseReport]
     root: String
+    testingSites(filter: testingSiteFilter): [TestingSite]
+    userVitals(filter: vitalsFilter): [Vitals]
     users: [User]
+    vitals(filter: vitalsFilter): [Vitals]
 }
 
 type SetUserNotificationTokenOutput {
@@ -52,19 +79,36 @@ type SetUserNotificationTokenOutput {
     user: User!
 }
 
+type TestingSite {
+    _id: ID
+    address: String
+    createdAt: DateTime
+    location: Location
+    name: String
+    updatedAt: DateTime
+}
+
 type User {
+    _id: ID
     age: Int
     arrivalDate: Date
     bluetoothID: String
+    caseName: String
+    gender: Gender
     lastCountriesVisited: [String]
     lastName: String
+    nationalID: String
     notificationToken: String
     otherNames: String
     phone: PhoneNumber
+    platform: Platform
 }
 
 type Vitals {
+    _id: ID
+    createdAt: DateTime
     location: Location
+    updatedAt: DateTime
     user: User
     vitals: VitalsDetails
 }
@@ -83,13 +127,26 @@ enum CacheControlScope {
     PUBLIC
 }
 
-enum reporting {
+enum Gender {
+    female
+    male
+}
+
+enum Platform {
+    android
+    ios
+    ussd
+    web
+}
+
+enum Reporting {
     individual
     self
 }
 
 input LocationInput {
-    coordinates: [Float]
+    latitude: Float!
+    longitude: Float!
 }
 
 input VitalsInput {
@@ -101,19 +158,57 @@ input VitalsInput {
     tiredness: Int
 }
 
-input loginUserInput {
-    phone: String!
+input addTestingSiteInput {
+    address: String!
+    location: LocationInput
+    name: String!
 }
 
-input onboardNewUserInput {
+input ageGroupInput {
+    from: Int
+    to: Int
+}
+
+input broadcastMessageFilter {
+    ageGroup: ageGroupInput
+    description: String
+    region: String
+    title: String
+}
+
+input broadcastMessageInput {
+    ageGroup: ageGroupInput
+    description: String!
+    region: String
+    title: String!
+}
+
+input caseReportFilter {
+    alternateContact: String
+    description: String
+    location: String
+    nearestLandmark: String
+    reporting: Reporting
+    user: ID
+}
+
+input editUserProfileInput {
     age: Int
     arrivalDate: Date
     bluetoothID: String
+    caseName: String
+    gender: Gender
     lastCountriesVisited: [String]
     lastName: String
+    nationalID: String
     notificationToken: String
     otherNames: String
     phone: PhoneNumber
+    platform: Platform
+}
+
+input loginUserInput {
+    phone: String!
 }
 
 input recordVitalsInput {
@@ -126,16 +221,26 @@ input reportCaseInput {
     description: String
     location: String
     nearestLandmark: String
-    reporting: reporting
+    reporting: Reporting
 }
 
 input setUserNotificationTokenInput {
     notificationToken: String!
 }
 
+input testingSiteFilter {
+    address: String
+    location: LocationInput
+    name: String
+}
+
 input validateLoginUserInput {
     otp: String!
     phone: String!
+}
+
+input vitalsFilter {
+    user: ID
 }
 
 

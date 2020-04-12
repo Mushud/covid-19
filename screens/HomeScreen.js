@@ -5,7 +5,6 @@ import {
   Text,
   ImageBackground,
   FlatList,
-  TouchableOpacity,
   AsyncStorage,
   ActivityIndicator,
 } from 'react-native';
@@ -15,7 +14,7 @@ import { homeItemsList } from './data';
 import TabBarIcon from '../components/TabBarIcon';
 import { NotificationContext } from '../context/Notification';
 import { useMutation, gql } from '@apollo/client';
-import { StyledText } from '../components/Typography';
+import ParentScreenHeader from '../components/ParentScreenHeader';
 
 const situationList = [
   {
@@ -103,18 +102,8 @@ const HomeScreen = ({ navigation }) => {
     );
   }
   return (
-    <View style={{ flex: 1, marginBottom: 400 }}>
-      <View style={{ backgroundColor: 'white', flexDirection: 'row' }}>
-        <View style={{ marginTop: 50, paddingHorizontal: 20, marginBottom: 0, flex: 0.9 }}>
-          <Text style={{ fontFamily: 'bold', fontSize: 22 }}>Live Information + Statistics</Text>
-          <Text style={{ fontFamily: 'regular' }}>From Ghana Health Services</Text>
-        </View>
-        <View style={{ marginTop: 50, flex: 0.1 }}>
-          <TouchableOpacity onPress={openNotificationScreen}>
-            <TabBarIcon focused={true} color="#718096" name="ios-notifications" size={27} />
-          </TouchableOpacity>
-        </View>
-      </View>
+    <View style={{ flex: 1, marginBottom: 400, backgroundColor: '#fff' }}>
+      <ParentScreenHeader title="Home" />
       <View style={{ height: 230, backgroundColor: '#ffffff' }}>
         <View>
           <View

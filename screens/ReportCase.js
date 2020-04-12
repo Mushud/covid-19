@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { View, Text, ScrollView, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Alert, ScrollView } from 'react-native';
 import Input from '../components/shared/Input';
 import Button from '../components/shared/Button';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { useMutation, gql } from '@apollo/client';
+import ParentScreenHeader from '../components/ParentScreenHeader';
 
 const reportCaseMutation = gql`
   mutation(
@@ -13,7 +13,7 @@ const reportCaseMutation = gql`
     $description: String
     $location: String
     $nearestLandmark: String
-    $reporting: reporting
+    $reporting: Reporting
   ) {
     reportCase(
       input: {
@@ -57,24 +57,18 @@ const ReportCase = () => {
       setPhone('');
       setDescription('');
     },
-    onError: () => {
+    onError: ({ graphQLErrors, networkError }) => {
+      console.log('This is error', graphQLErrors, networkError);
       Alert.alert('Error', 'Failed to make report');
     },
   });
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <PersonalDetailsContainer>
-        <View style={{ marginTop: 10, marginBottom: 20 }}>
-          <Text style={{ fontFamily: 'bold', textAlign: 'center', fontSize: 18 }}>
-            Report a case
-          </Text>
-          <Text style={{ fontFamily: 'regular', textAlign: 'center' }}>
-            Please provide your some important details
-          </Text>
-        </View>
+    <View>
+      <ParentScreenHeader title="Report Case" />
+      <ScrollView style={{ paddingHorizontal: 20 }}>
         <View>
-          <FormContainer>
+          <View>
             <Text style={{ fontFamily: 'bold', paddingLeft: 5 }}>Who are you reporting?</Text>
             <View style={{ flexDirection: 'row', paddingVertical: 10, flexWrap: 'wrap' }}>
               {options.map((value) => (
@@ -98,7 +92,7 @@ const ReportCase = () => {
                 </TouchableOpacity>
               ))}
             </View>
-          </FormContainer>
+          </View>
         </View>
         <View style={{ marginTop: 10 }}>
           <Text style={{ fontFamily: 'bold', paddingLeft: 5 }}>Location or Digital Address</Text>
@@ -146,32 +140,22 @@ const ReportCase = () => {
             onChangeText={setDescription}
           />
         </View>
-        <FormContainer style={{ marginTop: 0 }}>
+        <View style={{ marginTop: 0 }}>
           <TouchableOpacity style={{ flex: 0.48 }} onPressIn={reportCase}>
             <Button
               loading={loading}
               style={{
                 marginHorizontal: 0,
-                backgroundColor: '#73afff',
                 paddingHorizontal: 10,
-                borderWidth: 1,
-                borderColor: '#73afff',
               }}
             >
               <Text style={{ color: '#ffffff', fontFamily: 'bold' }}>Report Case</Text>
             </Button>
           </TouchableOpacity>
-        </FormContainer>
-      </PersonalDetailsContainer>
-    </ScrollView>
+        </View>
+      </ScrollView>
+    </View>
   );
 };
-
-const PersonalDetailsContainer = styled.View`
-  margin: 70px 20px 20px 20px;
-  flex: 1;
-`;
-
-const FormContainer = styled.View``;
 
 export default ReportCase;

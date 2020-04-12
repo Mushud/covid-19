@@ -43,6 +43,23 @@ const logVitalsMutation = gql`
   }
 `;
 
+const vitalsQuery = gql`
+  query {
+    userVitals {
+      _id
+      vitals {
+        aches
+        shortnessOfBreath
+        dryCough
+        fever
+        tiredness
+        soreThroat
+      }
+      createdAt
+    }
+  }
+`;
+
 const initialState = {
   tiredness: 0,
   shiver: 0,
@@ -62,11 +79,14 @@ export default function LogSymptoms({ navigation }) {
     onCompleted: () => {
       Alert.alert('Success', 'Your vitals have been logged successfully');
       setSymptom(initialState);
+      navigation.goBack();
     },
     onError: (e) => {
       console.log(e);
       Alert.alert('Error', 'Your vitals failed to log');
     },
+    awaitRefetchQueries: true,
+    refetchQueries: [{ query: vitalsQuery }],
   });
 
   function setSymptomSevere(key, number) {
