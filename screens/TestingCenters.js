@@ -1,11 +1,12 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, View, TouchableOpacity } from 'react-native';
 import ChildScreenHeader from '../components/ChildScreenHeader';
 import { gql, useQuery } from '@apollo/client';
 import LoadingState from '../components/LoadingState';
 import styled from 'styled-components';
 import { BoldText, RegularText } from '../components/Typography';
 import Colors from '../constants/Colors';
+import getDirections from 'react-native-google-maps-directions';
 
 const query = gql`
   query {
@@ -55,12 +56,43 @@ function TestingCenters() {
 
             <Row>
               <RegularText style={{ color: Colors.tintColor }}>{item.placesName}</RegularText>
+              <TouchableOpacity
+                onPress={() =>
+                  handleGetDirections({
+                    latitude: item.location.coordinates[1],
+                    longitude: item.location.coordinates[0],
+                  })
+                }
+              >
+                <RegularText style={{ color: 'orange' }}>Get Directions</RegularText>
+              </TouchableOpacity>
             </Row>
           </Card>
         )}
       />
     </Container>
   );
+
+  function handleGetDirections({ latitude, longitude }) {
+    const data = {
+      destination: {
+        latitude,
+        longitude,
+      },
+      params: [
+        {
+          key: 'travelmode',
+          value: 'driving',
+        },
+        {
+          key: 'dir_action',
+          value: 'navigate',
+        },
+      ],
+    };
+
+    getDirections(data);
+  }
 }
 
 const Container = styled.View`
