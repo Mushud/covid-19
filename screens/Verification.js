@@ -19,7 +19,6 @@ const validateLoginMutation = gql`
 
 function VerifyScreen({ navigation, route }) {
   const phone = route.params.phone;
-  console.log('loooog', route.params);
 
   const [validateLoginUser, { loading }] = useMutation(validateLoginMutation, {
     onError: ({ graphqlErrors }) => {

@@ -1,23 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { View, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 // components
 import { BoldText } from './Typography';
 import Colors from '../constants/Colors';
 import CustomStatusBar from './StatusBar';
-import { useQuery, gql } from '@apollo/client';
-
-import { View } from 'react-native';
-
-const memberProfileQuery = gql`
-  query {
-    memberProfile {
-      caseName
-    }
-  }
-`;
+import { Ionicons } from '@expo/vector-icons';
 
 function ParentScreenHeaderIos({ title, children }) {
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -27,18 +19,32 @@ function ParentScreenHeaderIos({ title, children }) {
       }}
     >
       <CustomStatusBar />
-      <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
-        <View
-          style={{
-            height: 36,
-            width: 36,
-            borderRadius: 18,
-            backgroundColor: '#e3e3e3',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <BoldText style={{ color: '#ffffff' }}>RA</BoldText>
+      <View
+        style={{
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <View
+            style={{
+              height: 36,
+              width: 36,
+              borderRadius: 18,
+              backgroundColor: '#e3e3e3',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <BoldText style={{ color: '#ffffff' }}>RA</BoldText>
+          </View>
+        </TouchableOpacity>
+
+        <View>
+          <Ionicons name="ios-notifications-outline" size={35} />
         </View>
       </View>
 

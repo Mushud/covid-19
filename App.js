@@ -68,9 +68,9 @@ export default function App(props) {
           <NotificationProvider>
             <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
               <Stack.Navigator headerMode="none">
-                {/*                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Verification" component={Verification} />
-                <Stack.Screen name="InformationScreen" component={InformationScreen} />*/}
+                <Stack.Screen name="InformationScreen" component={InformationScreen} />
                 <Stack.Screen name="Home" component={BottomTabNavigator} />
               </Stack.Navigator>
             </NavigationContainer>

@@ -15,7 +15,7 @@ function Input({ placeholderLabel, placeholderPrefix, placeholderTextColor, ...p
         backgroundColor: '#fff',
         paddingHorizontal: 15,
         marginTop: 10,
-        height: 60,
+        height: 50,
       }}
     >
       <View

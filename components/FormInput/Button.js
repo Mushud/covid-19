@@ -14,7 +14,7 @@ function Button({ children, loading, style }) {
           marginVertical: 10,
           backgroundColor: Colors.tintColor,
           paddingVertical: 15,
-          minHeight: 60,
+          minHeight: 50,
           ...style,
         }}
       >

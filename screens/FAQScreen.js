@@ -6,6 +6,7 @@ import { deleteAuthToken } from '../utils';
 import TabBarIcon from '../components/TabBarIcon';
 import { NotificationContext } from '../context/Notification';
 import ParentScreenHeader from '../components/ParentScreenHeader';
+import ChildScreenHeader from '../components/ChildScreenHeader';
 
 const faqs = [
   {
@@ -208,7 +209,7 @@ const FAQScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
-      <ParentScreenHeader title="FAQ" />
+      <ChildScreenHeader title="FAQ" />
       <View style={{ backgroundColor: 'white', flexDirection: 'row' }}>
         <View style={{ marginTop: 50, paddingHorizontal: 20, marginBottom: 0, flex: 0.9 }}>
           <TouchableOpacity onLongPress={() => deleteAuthToken()}>

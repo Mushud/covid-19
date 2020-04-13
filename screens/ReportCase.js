@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Alert, ScrollView } from 'react-native';
-import Input from '../components/shared/Input';
-import Button from '../components/shared/Button';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
+import Input from '../components/FormInput/Input';
+import Button from '../components/FormInput/Button';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { useMutation, gql } from '@apollo/client';
-import ParentScreenHeader from '../components/ParentScreenHeader';
+import { BoldText } from '../components/Typography';
+import ChildScreenHeader from '../components/ChildScreenHeader';
 
 const reportCaseMutation = gql`
   mutation(
@@ -29,12 +38,25 @@ const reportCaseMutation = gql`
   }
 `;
 
+const reportedCasesQuery = gql`
+  query {
+    userReportedCases {
+      _id
+      nearestLandmark
+      alternateContact
+      reporting
+      description
+      createdAt
+    }
+  }
+`;
+
 const options = [
   { title: 'Self', value: 'self' },
   { title: 'Other Individual', value: 'other' },
 ];
 
-const ReportCase = () => {
+const ReportCase = ({ navigation }) => {
   const [person, setPerson] = useState('self');
   const [landmark, setLandmark] = useState('');
   const [location, setLocation] = useState('');
@@ -56,16 +78,19 @@ const ReportCase = () => {
       setLocation('');
       setPhone('');
       setDescription('');
+      navigation.goBack();
     },
     onError: ({ graphQLErrors, networkError }) => {
       console.log('This is error', graphQLErrors, networkError);
       Alert.alert('Error', 'Failed to make report');
     },
+    awaitRefetchQueries: true,
+    refetchQueries: [{ query: reportedCasesQuery }],
   });
 
   return (
-    <View>
-      <ParentScreenHeader title="Report Case" />
+    <View style={{ backgroundColor: '#fff', flex: 1 }}>
+      <ChildScreenHeader title="Make Report" />
       <ScrollView style={{ paddingHorizontal: 20 }}>
         <View>
           <View>
@@ -130,7 +155,6 @@ const ReportCase = () => {
               backgroundColor: 'white',
               borderWidth: 0.3,
               borderColor: '#ccc',
-              borderRadius: 5,
             }}
             underlineColorAndroid="transparent"
             placeholder="Type something"
@@ -140,20 +164,21 @@ const ReportCase = () => {
             onChangeText={setDescription}
           />
         </View>
-        <View style={{ marginTop: 0 }}>
-          <TouchableOpacity style={{ flex: 0.48 }} onPressIn={reportCase}>
-            <Button
-              loading={loading}
-              style={{
-                marginHorizontal: 0,
-                paddingHorizontal: 10,
-              }}
-            >
-              <Text style={{ color: '#ffffff', fontFamily: 'bold' }}>Report Case</Text>
-            </Button>
-          </TouchableOpacity>
-        </View>
       </ScrollView>
+
+      <View style={{ position: 'absolute', bottom: 5, left: 20, right: 20 }}>
+        <TouchableOpacity style={{ flex: 0.48 }} onPressIn={reportCase}>
+          <Button
+            loading={loading}
+            style={{
+              marginHorizontal: 0,
+              paddingHorizontal: 10,
+            }}
+          >
+            <Text style={{ color: '#ffffff', fontFamily: 'bold' }}>Report Case</Text>
+          </Button>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

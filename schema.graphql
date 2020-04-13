@@ -21,15 +21,18 @@ type BroadcastMessage {
 
 type BroadcastMessageTargetGroup {
     ageGroup: AgeGroup
-    region: String
+    region: [String]
 }
 
 type CaseReport {
+    _id: ID
     alternateContact: String
+    createdAt: DateTime
     description: String
     location: String
     nearestLandmark: String
     reporting: Reporting
+    updatedAt: DateTime
     user: User
 }
 
@@ -69,6 +72,7 @@ type Query {
     reportedCases(filter: caseReportFilter): [CaseReport]
     root: String
     testingSites(filter: testingSiteFilter): [TestingSite]
+    userReportedCases(filter: caseReportFilter): [CaseReport]
     userVitals(filter: vitalsFilter): [Vitals]
     users: [User]
     vitals(filter: vitalsFilter): [Vitals]
@@ -85,6 +89,7 @@ type TestingSite {
     createdAt: DateTime
     location: Location
     name: String
+    placesName: String
     updatedAt: DateTime
 }
 
@@ -162,6 +167,7 @@ input addTestingSiteInput {
     address: String!
     location: LocationInput
     name: String!
+    placesName: String!
 }
 
 input ageGroupInput {
@@ -172,14 +178,14 @@ input ageGroupInput {
 input broadcastMessageFilter {
     ageGroup: ageGroupInput
     description: String
-    region: String
+    region: [String]
     title: String
 }
 
 input broadcastMessageInput {
     ageGroup: ageGroupInput
     description: String!
-    region: String
+    region: [String]
     title: String!
 }
 
@@ -232,6 +238,7 @@ input testingSiteFilter {
     address: String
     location: LocationInput
     name: String
+    placesName: String
 }
 
 input validateLoginUserInput {
