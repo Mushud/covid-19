@@ -40,7 +40,7 @@ export default function CaseReports({ navigation }) {
   return (
     <Container>
       <ParentScreenHeaderIos title="Case Reports" />
-      {!false ? (
+      {!data.userReportedCases.length ? (
         <EmptyCaseReportsState />
       ) : (
         <>
@@ -48,7 +48,7 @@ export default function CaseReports({ navigation }) {
             showsVerticalScrollIndicator={false}
             onRefresh={() => refetch()}
             refreshing={loading}
-            data={/*data.userReportedCases*/ []}
+            data={data.userReportedCases}
             keyExtractor={(item) => item.createdAt}
             renderItem={({ item }) => (
               <Card>

@@ -121,7 +121,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           title: 'Settings',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-settings" />,
           tabBarLabel: ({ focused }) => (
-            <RegularText style={{ color: focused ? '#000' : '#b1b1b1' }}>Home</RegularText>
+            <RegularText style={{ color: focused ? '#000' : '#b1b1b1' }}>Settings</RegularText>
           ),
         }}
       />

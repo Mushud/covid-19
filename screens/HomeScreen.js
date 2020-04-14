@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import { homeItemsList } from './data';
 import ParentScreenHeader from '../components/ParentScreenHeader';
 import { BoldText, RegularText } from '../components/Typography';
+import { ApolloClient, InMemoryCache, useQuery, gql, createHttpLink } from '@apollo/client';
+import LoadingState from '../components/LoadingState';
+import EmptyCaseReportsState from '../components/EmptyCaseReportsState';
 
 const situationList = [
   {
@@ -21,7 +24,77 @@ const situationList = [
   },
 ];
 
+const covidTrackerGraphqlClient = new ApolloClient({
+  link: createHttpLink({
+    uri: 'https://covid19-graphql.netlify.com'
+  }),
+  cache: new InMemoryCache(),
+});
+
+
+const ghanaCasesQuery = gql`
+    query {
+        country(name:"Ghana") {
+            country
+            result {
+                tests
+                cases
+                todayCases
+                deaths
+                todayDeaths
+                recovered
+                active
+                critical
+                casesPerOneMillion
+                deathsPerOneMillion
+                testsPerOneMillion
+                updated
+            }
+        }
+    }
+`
+
 const HomeScreen = ({ navigation }) => {
+  const { loading, data, error } = useQuery(ghanaCasesQuery, {
+    client: covidTrackerGraphqlClient
+  });
+
+  if(loading && !data){
+    return (
+      <View style={{ backgroundColor: '#fff', flex: 1 }}>
+        <ParentScreenHeader title="Home" />
+        <LoadingState/>
+      </View>
+    )
+  }
+
+  if(error){
+    return (
+      <View style={{ backgroundColor: '#fff', flex: 1 }}>
+        <ParentScreenHeader title="Home" />
+        <EmptyCaseReportsState/>
+      </View>
+    )
+  }
+
+  const summaryData = [
+    {
+      title: 'Confirmed Cases',
+      content: data.country.result.cases,
+      bg: require('../assets/images/use-covid.jpeg'),
+    },
+    {
+      title: 'Recovered',
+      content: data.country.result.recovered,
+      bg: require('../assets/images/use-covid-2.jpeg'),
+    },
+    {
+      title: 'Deaths',
+      content: data.country.result.deaths,
+      bg: require('../assets/images/death.jpeg'),
+    },
+  ];
+
   return (
     <View style={{ backgroundColor: '#fff' }}>
       <ParentScreenHeader title="Home" />
@@ -34,7 +107,7 @@ const HomeScreen = ({ navigation }) => {
           >
             <FlatList
               style={{ paddingLeft: 20 }}
-              data={homeItemsList}
+              data={summaryData}
               horizontal={true}
               showsHorizontalScrollIndicator={true}
               renderItem={HomeItemCard}
@@ -54,10 +127,10 @@ const HomeScreen = ({ navigation }) => {
             }}
           >
             <FlatList
-              data={situationList}
+              data={summaryData}
               showsHorizontalScrollIndicator={false}
               renderItem={SituationItemCard}
-              keyExtractor={(item) => item._id}
+              keyExtractor={(item) => item.title}
             />
           </View>
         </View>

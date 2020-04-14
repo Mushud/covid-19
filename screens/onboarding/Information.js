@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 import { BoldText, RegularText } from '../../components/Typography';
 import Button from '../../components/FormInput/Button';
 
 const InformationScreen = ({ navigation }) => {
+  StatusBar.setBarStyle('dark-content')
   return (
-    <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
+    <View style={{ flex: 1, backgroundColor: '#ffffff', paddingBottom: 50 }}>
       <View
         style={{
           flexDirection: 'row',
@@ -18,8 +19,9 @@ const InformationScreen = ({ navigation }) => {
           <BoldText size="lg">General Information</BoldText>
         </View>
       </View>
-      <ScrollView style={{ paddingHorizontal: 20, flex: 1, marginBottom: 50 }}>
+      <ScrollView style={{ paddingHorizontal: 20, flex: 1, paddingBottom: 50, paddingTop: 20}}>
         <View>
+          <BoldText size="md">Background</BoldText>
           <RegularText>
             Citizens are advised to provide accurate information on this application to support the
             government and health services in managing and accurately containing the spread of the
@@ -124,12 +126,16 @@ const InformationScreen = ({ navigation }) => {
             <RegularText>
               If you have questions or comments about this Privacy Policy, please contact us at
             </RegularText>
-            <RegularText>Polymorph Labs Gh. Ltd.</RegularText>
-            <RegularText>17 National Service Avenue Market Street</RegularText>
-            <RegularText>Haatso, Accra</RegularText>
-            <RegularText>Ghana</RegularText>
-            <RegularText>+233 204045782</RegularText>
-            <RegularText>info@polymorphlabs.io</RegularText>
+          </View>
+
+          <View style={{ marginTop: 10, alignItems: 'flex-end', paddingBottom: 100 }}>
+
+          <RegularText>Polymorph Labs Gh. Ltd.</RegularText>
+          <RegularText>17 National Service Avenue Market Street</RegularText>
+          <RegularText>Haatso, Accra</RegularText>
+          <RegularText>Ghana</RegularText>
+          <RegularText>+233 204045782</RegularText>
+          <RegularText>info@polymorphlabs.io</RegularText>
           </View>
         </View>
       </ScrollView>

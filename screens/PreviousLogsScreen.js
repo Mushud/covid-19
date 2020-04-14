@@ -70,42 +70,46 @@ export default function PreviousVitalsLog({ navigation }) {
             data={data.userVitals}
             keyExtractor={(item) => item.createdAt}
             renderItem={({ item }) => (
-              <View style={{ marginBottom: 30, marginHorizontal: 20 }}>
-                <View style={{ alignItems: 'flex-end' }}>
-                  <RegularText>{new Date(item.createdAt).toDateString()}</RegularText>
+              <View style={{ marginBottom: 10, marginHorizontal: 20 }}>
+                <View style={{ alignItems: 'flex-start', paddingLeft: 30 }}>
+                  <BoldText>{new Date(item.createdAt).toDateString()}</BoldText>
                 </View>
                 <ListItem>
-                  <Row style={{ marginBottom: 30 }}>
-                    <RowItem>
+                  <Row style={{ marginBottom: 0 }}>
+                    <RowItem style={{ backgroundColor: scale[item.vitals.aches].color }}>
+                      <RegularText style={{ color: 'white'}}>Aches</RegularText>
+                      <BoldText size="md" style={{ color: 'white'}}>{item.vitals.aches}</BoldText>
                       <Scale value={item.vitals.aches} />
-                      <RegularText>Aches</RegularText>
                     </RowItem>
-
-                    <RowItem>
+                    <RowItem style={{ backgroundColor: scale[item.vitals.shortnessOfBreath].color }}>
+                      <RegularText style={{ color: 'white', textAlign: 'center'}}> Breath {"\n"} Shortness</RegularText>
+                      <BoldText size="md" style={{ color: 'white'}}>{item.vitals.shortnessOfBreath}</BoldText>
                       <Scale value={item.vitals.shortnessOfBreath} />
-                      <RegularText>Shortness of Breath</RegularText>
                     </RowItem>
-
-                    <RowItem>
+                    <RowItem style={{ backgroundColor: scale[item.vitals.fever].color }}>
+                      <RegularText style={{ color: 'white'}}>Fever</RegularText>
+                      <BoldText size="md" style={{ color: 'white'}}>{item.vitals.fever}</BoldText>
                       <Scale value={item.vitals.fever} />
-                      <RegularText>Fever</RegularText>
                     </RowItem>
                   </Row>
 
                   <Row>
-                    <RowItem>
+                    <RowItem style={{ backgroundColor: scale[item.vitals.dryCough].color }}>
+                      <RegularText style={{ color: 'white'}}>Dry Cough</RegularText>
+                      <BoldText size="md" style={{ color: 'white'}}>{item.vitals.dryCough}</BoldText>
                       <Scale value={item.vitals.dryCough} />
-                      <RegularText>Dry Cough</RegularText>
                     </RowItem>
 
-                    <RowItem>
+                    <RowItem style={{ backgroundColor: scale[item.vitals.tiredness].color }}>
+                      <RegularText style={{ color: 'white'}}>Tiredness</RegularText>
+                      <BoldText size="md" style={{ color: 'white'}}>{item.vitals.tiredness}</BoldText>
                       <Scale value={item.vitals.tiredness} />
-                      <RegularText>Tiredness</RegularText>
                     </RowItem>
 
-                    <RowItem>
+                    <RowItem style={{ backgroundColor: scale[item.vitals.soreThroat].color }}>
+                      <RegularText style={{ color: 'white'}}>Sore Throat</RegularText>
+                      <BoldText size="md" style={{ color: 'white'}}>{item.vitals.soreThroat}</BoldText>
                       <Scale value={item.vitals.soreThroat} />
-                      <RegularText>Sore Throat</RegularText>
                     </RowItem>
                   </Row>
                 </ListItem>
@@ -135,11 +139,31 @@ function Scale({ value = 0 }) {
   const scaleValue = scale[value];
   return (
     <View style={{ flexDirection: 'row' }}>
-      <BoldText style={{ color: scaleValue.color, textAlign: 'center' }} size="sm">
+      <BoldText style={{ color: 'white', textAlign: 'center' }} size="sm">
         {scaleValue.status}
       </BoldText>
     </View>
   );
+}
+
+function Bar({ value, nameOfVital }) {
+  const scaleValue = scale[value];
+  const ourArray = [0, 1, 2, 3, 4];
+
+  return (
+    <View style={{ height: 20,}}>
+      <RegularText>{nameOfVital}</RegularText>
+      <View style={{ flexDirection: 'row' }}>
+        {
+          ourArray.map(item => {
+            return (
+              <View style={{ width: 40, backgroundColor: (item <= value) ? scaleValue.color : 'white', height: 10}} />
+            )
+          })
+        }
+      </View>
+    </View>
+  )
 }
 
 const styles = {
@@ -158,8 +182,8 @@ const Card = styled.View`
 `;
 
 const ListItem = styled.View`
-  margin-top: 15px;
-  padding: 25px 20px;
+  margin-top: 0px;
+  padding: 5px 20px;
   border-bottom-width: 1px;
   border-bottom-color: #e3e3e3;
 `;
@@ -172,6 +196,12 @@ const Row = styled.View`
 const RowItem = styled.View`
   justify-content: center;
   align-items: center;
+  border: 1px solid #e3e3e3;
+  flex: 1;
+  margin: 5px;
+  padding: 10px 0px;
+  border-radius: 5px;
+  height: 80px;
 `;
 
 const FAB = styled.View`
