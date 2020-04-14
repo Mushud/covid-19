@@ -1,20 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  ImageBackground,
-  FlatList,
-  AsyncStorage,
-  ActivityIndicator,
-} from 'react-native';
+import React from 'react';
+import { View, ScrollView, Text, ImageBackground, FlatList } from 'react-native';
 
 import styled from 'styled-components';
 import { homeItemsList } from './data';
-import TabBarIcon from '../components/TabBarIcon';
-import { NotificationContext } from '../context/Notification';
-import { useMutation, gql } from '@apollo/client';
 import ParentScreenHeader from '../components/ParentScreenHeader';
+import { BoldText, RegularText } from '../components/Typography';
 
 const situationList = [
   {
@@ -31,121 +21,50 @@ const situationList = [
   },
 ];
 
-const onboardUserMutation = gql`
-  mutation(
-    $otherNames: String
-    $lastName: String
-    $lastCountriesVisited: [String]
-    $arrivalDate: Date
-    $age: Int
-  ) {
-    onboardNewUser(
-      input: {
-        otherNames: $otherNames
-        lastName: $lastName
-        lastCountriesVisited: $lastCountriesVisited
-        arrivalDate: $arrivalDate
-        age: $age
-      }
-    ) {
-      otherNames
-      lastName
-    }
-  }
-`;
-
 const HomeScreen = ({ navigation }) => {
-  const { openNotificationScreen } = useContext(NotificationContext);
-  const [firstLoading, setFirstLoading] = useState(true);
-  const [onboardUser] = useMutation(onboardUserMutation);
-
-  useEffect(() => {
-    async function sendDetails() {
-      const syncStatus = await AsyncStorage.getItem('syncStatus');
-      if (syncStatus && JSON.parse(syncStatus)) {
-        setFirstLoading(false);
-        return;
-      }
-
-      let personalDetails = await AsyncStorage.getItem('personalDetails');
-      let travellingDetails = await AsyncStorage.getItem('travellingDetails');
-
-      personalDetails = JSON.parse(personalDetails);
-      travellingDetails = JSON.parse(travellingDetails);
-      console.log(personalDetails);
-      console.log(travellingDetails);
-
-      try {
-        await onboardUser({
-          variables: {
-            age: Number(personalDetails.age),
-            otherNames: personalDetails.otherNames,
-            lastName: personalDetails.surname,
-            lastCountriesVisited: [travellingDetails.countryOne, travellingDetails.countryTwo],
-            arrivalDate: travellingDetails.arrivalDate,
-          },
-        });
-        setFirstLoading(false);
-      } catch (e) {
-        setFirstLoading(false);
-      }
-    }
-
-    sendDetails();
-  }, []);
-
-  if (firstLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator />
-      </View>
-    );
-  }
   return (
-    <View style={{ flex: 1, marginBottom: 400, backgroundColor: '#fff' }}>
+    <View style={{ backgroundColor: '#fff' }}>
       <ParentScreenHeader title="Home" />
-      <View style={{ height: 230, backgroundColor: '#ffffff' }}>
+      <ScrollView style={{ backgroundColor: '#ffffff' }}>
         <View>
           <View
             style={{
               marginTop: 10,
-              height: 210,
             }}
           >
             <FlatList
               style={{ paddingLeft: 20 }}
               data={homeItemsList}
               horizontal={true}
-              showsHorizontalScrollIndicator={false}
+              showsHorizontalScrollIndicator={true}
               renderItem={HomeItemCard}
               keyExtractor={(item) => item._id}
             />
           </View>
         </View>
-      </View>
-      <View>
-        <View style={{ marginTop: 20, paddingHorizontal: 20, marginBottom: 0 }}>
-          <Text style={{ fontFamily: 'bold', fontSize: 22 }}>Ghana's Situation Updates</Text>
-          <Text style={{ fontFamily: 'regular' }}>
-            Last Updated : {new Date().toLocaleDateString()}
-          </Text>
+
+        <View>
+          <View style={{ marginTop: 20, paddingHorizontal: 20, marginBottom: 0 }}>
+            <BoldText size="md">Ghana's Situation Updates</BoldText>
+            <RegularText>Last Updated : {new Date().toLocaleDateString()}</RegularText>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+            }}
+          >
+            <FlatList
+              data={situationList}
+              showsHorizontalScrollIndicator={false}
+              renderItem={SituationItemCard}
+              keyExtractor={(item) => item._id}
+            />
+          </View>
         </View>
-        <ScrollView
-          style={{
-            marginTop: 10,
-          }}
-        >
-          <FlatList
-            data={situationList}
-            showsHorizontalScrollIndicator={false}
-            renderItem={SituationItemCard}
-            keyExtractor={(item) => item._id}
-            contentContainerStyle={{ height: '100%' }}
-          />
-        </ScrollView>
-      </View>
+      </ScrollView>
     </View>
   );
+
   function HomeItemCard({ item }) {
     return (
       <View style={{ paddingRight: item.key === 'death' ? 20 : 0 }}>
@@ -227,10 +146,6 @@ const HomeItemContainer = styled.View`
   border-radius: 10px;
   margin: 10px 20px 10px 0px;
   align-items: center;
-`;
-
-const FloatingMenu = styled.View`
-  box-shadow: 0px 10px 10px rgba(213, 213, 213, 0.5);
 `;
 
 export default HomeScreen;

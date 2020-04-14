@@ -1,11 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, Text } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import Hyperlink from 'react-native-hyperlink';
-import { deleteAuthToken } from '../utils';
-import TabBarIcon from '../components/TabBarIcon';
-import { NotificationContext } from '../context/Notification';
-import ParentScreenHeader from '../components/ParentScreenHeader';
 import ChildScreenHeader from '../components/ChildScreenHeader';
 
 const faqs = [
@@ -171,7 +167,6 @@ const faqs = [
 
 const FAQScreen = ({ navigation }) => {
   const [activeSections, setActiveSections] = useState([]);
-  const { openNotificationScreen } = useContext(NotificationContext);
 
   const _renderHeader = (section) => {
     return (
@@ -210,28 +205,6 @@ const FAQScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
       <ChildScreenHeader title="FAQ" />
-      <View style={{ backgroundColor: 'white', flexDirection: 'row' }}>
-        <View style={{ marginTop: 50, paddingHorizontal: 20, marginBottom: 0, flex: 0.9 }}>
-          <TouchableOpacity onLongPress={() => deleteAuthToken()}>
-            <Text style={{ fontFamily: 'regular' }}>From World Health Organization</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{ marginTop: 50, flex: 0.1 }}>
-          <TouchableOpacity onPress={openNotificationScreen}>
-            <TabBarIcon focused={true} color="#718096" name="ios-notifications" size={27} />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={{ backgroundColor: 'white', paddingHorizontal: 20, paddingVertical: 20 }}>
-        <Hyperlink linkStyle={{ color: 'red' }} linkDefault={true}>
-          <Text style={{ fontFamily: 'regular' }}>
-            WHO is continuously monitoring and responding to this outbreak. This Q&A will be updated
-            as more is known about COVID-19, how it spreads and how it is affecting people
-            worldwide. For more information, check back regularly on WHO’s Coronavirus pages.
-            https://www.who.int/emergencies/diseases/novel-coronavirus-2019
-          </Text>
-        </Hyperlink>
-      </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ paddingBottom: 30 }}>
           <Accordion

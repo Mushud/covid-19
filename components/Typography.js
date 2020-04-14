@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
-import { human, material, iOSUIKit } from 'react-native-typography';
+import { material, iOSUIKit } from 'react-native-typography';
 
 const StyledText = (props) => {
   if (props.bible) {
@@ -31,24 +31,6 @@ const StyledHeader = (props) => {
 
 const StyledSubtitle = (props) => {
   return <Text {...props} style={[{ fontFamily: 'regular', color: '#465867' }, props.style]} />;
-};
-
-const StyledTextInverse = (props) => {
-  return <Text {...props} style={[{ fontFamily: 'regular', color: '#FFFFFF' }, props.style]} />;
-};
-
-const StyledHeaderInverse = (props) => {
-  return (
-    <Text
-      h4
-      {...props}
-      style={[{ fontFamily: 'bold', color: '#FFFFFF', fontSize: 25 }, props.style]}
-    />
-  );
-};
-
-const StyledSubtitleInverse = (props) => {
-  return <Text {...props} h6 style={[{ fontFamily: 'regular', color: '#FFFFFF' }, props.style]} />;
 };
 
 const RegularText = ({ style = {}, size, ...restProps }) => {
@@ -83,13 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {
-  StyledHeader,
-  StyledText,
-  StyledSubtitle,
-  StyledHeaderInverse,
-  StyledSubtitleInverse,
-  StyledTextInverse,
-  BoldText,
-  RegularText,
-};
+export { StyledHeader, StyledText, StyledSubtitle, BoldText, RegularText };

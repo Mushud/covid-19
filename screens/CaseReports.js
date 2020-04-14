@@ -9,6 +9,8 @@ import { gql, useQuery } from '@apollo/client';
 import LoadingState from '../components/LoadingState';
 import styled from 'styled-components';
 import { Ionicons } from '@expo/vector-icons';
+import EmptyVitalsState from '../components/EmptyVitalsState';
+import EmptyCaseReportsState from '../components/EmptyCaseReportsState';
 
 const query = gql`
   query {
@@ -38,35 +40,42 @@ export default function CaseReports({ navigation }) {
   return (
     <Container>
       <ParentScreenHeaderIos title="Case Reports" />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        onRefresh={() => refetch()}
-        refreshing={loading}
-        data={data.userReportedCases}
-        keyExtractor={(item) => item.createdAt}
-        renderItem={({ item }) => (
-          <Card>
-            <Row>
-              <BoldText>{item.reporting[0].toUpperCase() + item.reporting.slice(1)}</BoldText>
-              <RegularText>{new Date(item.createdAt).toDateString()}</RegularText>
-            </Row>
+      {!false ? (
+        <EmptyCaseReportsState />
+      ) : (
+        <>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            onRefresh={() => refetch()}
+            refreshing={loading}
+            data={/*data.userReportedCases*/ []}
+            keyExtractor={(item) => item.createdAt}
+            renderItem={({ item }) => (
+              <Card>
+                <Row>
+                  <BoldText>{item.reporting[0].toUpperCase() + item.reporting.slice(1)}</BoldText>
+                  <RegularText>{new Date(item.createdAt).toDateString()}</RegularText>
+                </Row>
 
-            <Row style={{ marginTop: 10 }}>
-              <RegularText style={{ color: Colors.tintColor }}>{item.description}</RegularText>
-            </Row>
+                <Row style={{ marginTop: 10 }}>
+                  <RegularText style={{ color: Colors.tintColor }}>{item.description}</RegularText>
+                </Row>
 
-            <Row>
-              <RegularText style={{ color: Colors.tintColor }}>{item.alternateContact}</RegularText>
-            </Row>
-          </Card>
-        )}
-      />
-
-      <FAB>
-        <TouchableOpacity onPress={() => navigation.navigate('MakeCaseReport')}>
-          <Ionicons name="ios-add" color="#fff" size={20} />
-        </TouchableOpacity>
-      </FAB>
+                <Row>
+                  <RegularText style={{ color: Colors.tintColor }}>
+                    {item.alternateContact}
+                  </RegularText>
+                </Row>
+              </Card>
+            )}
+          />
+          <FAB>
+            <TouchableOpacity onPress={() => navigation.navigate('MakeCaseReport')}>
+              <Ionicons name="ios-add" color="#fff" size={20} />
+            </TouchableOpacity>
+          </FAB>
+        </>
+      )}
     </Container>
   );
 }

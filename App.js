@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NotificationProvider } from './context/Notification';
 import apolloClient from './graphql/client';
 import { ApolloProvider } from '@apollo/client';
-import { deleteAuthToken, retrieveAuthToken } from './utils';
+import { retrieveAuthToken } from './utils';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
@@ -68,9 +68,13 @@ export default function App(props) {
           <NotificationProvider>
             <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
               <Stack.Navigator headerMode="none">
-                <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen name="Verification" component={Verification} />
-                <Stack.Screen name="InformationScreen" component={InformationScreen} />
+                {!authToken ? (
+                  <>
+                    <Stack.Screen name="Login" component={Login} />
+                    <Stack.Screen name="Verification" component={Verification} />
+                    <Stack.Screen name="InformationScreen" component={InformationScreen} />
+                  </>
+                ) : null}
                 <Stack.Screen name="Home" component={BottomTabNavigator} />
               </Stack.Navigator>
             </NavigationContainer>

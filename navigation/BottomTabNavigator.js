@@ -13,6 +13,7 @@ import ReportCase from '../screens/ReportCase';
 import CaseReports from '../screens/CaseReports';
 import SettingsScreen from '../screens/Settings';
 import TestingCentersScreen from '../screens/TestingCenters';
+import { RegularText } from '../components/Typography';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -85,7 +86,10 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={HomeStack}
         options={{
           title: 'Home',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-albums" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
+          tabBarLabel: ({ focused }) => (
+            <RegularText style={{ color: focused ? '#000' : '#b1b1b1' }}>Home</RegularText>
+          ),
         }}
       />
       <BottomTab.Screen
@@ -94,6 +98,9 @@ export default function BottomTabNavigator({ navigation, route }) {
         options={{
           title: 'Report',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-paper-plane" />,
+          tabBarLabel: ({ focused }) => (
+            <RegularText style={{ color: focused ? '#000' : '#b1b1b1' }}>Report</RegularText>
+          ),
         }}
       />
       <BottomTab.Screen
@@ -102,6 +109,9 @@ export default function BottomTabNavigator({ navigation, route }) {
         options={{
           title: 'Vitals',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-pulse" />,
+          tabBarLabel: ({ focused }) => (
+            <RegularText style={{ color: focused ? '#000' : '#b1b1b1' }}>Vitals</RegularText>
+          ),
         }}
       />
       <BottomTab.Screen
@@ -109,7 +119,10 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={SettingsStack}
         options={{
           title: 'Settings',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-radio" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-settings" />,
+          tabBarLabel: ({ focused }) => (
+            <RegularText style={{ color: focused ? '#000' : '#b1b1b1' }}>Home</RegularText>
+          ),
         }}
       />
     </BottomTab.Navigator>

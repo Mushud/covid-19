@@ -4,6 +4,7 @@ import ParentScreenHeader from '../components/ParentScreenHeader';
 import styled from 'styled-components';
 import { BoldText, RegularText } from '../components/Typography';
 import { Ionicons } from '@expo/vector-icons';
+import { deleteAuthToken } from '../utils';
 
 function Settings({ navigation }) {
   return (
@@ -56,7 +57,7 @@ function Settings({ navigation }) {
             </SettingsItem>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onLongPress={deleteAuthToken}>
             <SettingsItem>
               <View>
                 <BoldText size="md">Privacy Policy</BoldText>

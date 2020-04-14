@@ -1,255 +1,271 @@
 # This file was generated based on ".graphqlconfig". Do not edit manually.
 
 schema {
-    query: Query
-    mutation: Mutation
+  query: Query
+  mutation: Mutation
 }
 
 type AgeGroup {
-    from: Int
-    to: Int
+  from: Int
+  to: Int
 }
 
 type BroadcastMessage {
-    _id: ID
-    createdAt: DateTime
-    description: String
-    targetGroup: BroadcastMessageTargetGroup
-    title: String
-    updatedAt: DateTime
+  _id: ID
+  createdAt: DateTime
+  description: String
+  targetGroup: BroadcastMessageTargetGroup
+  title: String
+  updatedAt: DateTime
 }
 
 type BroadcastMessageTargetGroup {
-    ageGroup: AgeGroup
-    region: [String]
+  ageGroup: AgeGroup
+  region: [String]
 }
 
 type CaseReport {
-    _id: ID
-    alternateContact: String
-    createdAt: DateTime
-    description: String
-    location: String
-    nearestLandmark: String
-    reporting: Reporting
-    updatedAt: DateTime
-    user: User
+  _id: ID
+  alternateContact: String
+  createdAt: DateTime
+  description: String
+  location: String
+  nearestLandmark: String
+  reporting: Reporting
+  updatedAt: DateTime
+  user: User
 }
 
 type Location {
-    "Coordinates is an array of lnglat"
-    coordinates: [Float]
+  "Coordinates is an array of lnglat"
+  coordinates: [Float]
 }
 
 type LoginUserOutput {
-    message: String!
-    success: Boolean!
+  message: String!
+  success: Boolean!
 }
 
 type MobileToken {
-    createdAt: DateTime!
-    mobileToken: String!
-    newUser: Boolean!
-    updatedAt: DateTime!
-    user: User
+  createdAt: DateTime!
+  mobileToken: String!
+  newUser: Boolean!
+  updatedAt: DateTime!
+  user: User
 }
 
 type Mutation {
-    addTestingSite(input: addTestingSiteInput): TestingSite
-    editUserProfile(input: editUserProfileInput!): User
-    loginUser(input: loginUserInput): LoginUserOutput!
-    recordVitals(input: recordVitalsInput): Vitals
-    reportCase(input: reportCaseInput): CaseReport
-    root: String
-    sendBroadcastMessage(input: broadcastMessageInput): BroadcastMessage
-    setUserNotificationToken(input: setUserNotificationTokenInput): SetUserNotificationTokenOutput!
-    validateLoginUser(input: validateLoginUserInput): MobileToken!
+  addTestingSite(input: addTestingSiteInput): TestingSite
+  editUserProfile(input: editUserProfileInput!): User
+  loginUser(input: loginUserInput): LoginUserOutput!
+  recordVitals(input: recordVitalsInput): Vitals
+  reportCase(input: reportCaseInput): CaseReport
+  root: String
+  sendBroadcastMessage(input: broadcastMessageInput): BroadcastMessage
+  setUserNotificationToken(input: setUserNotificationTokenInput): SetUserNotificationTokenOutput!
+  validateLoginUser(input: validateLoginUserInput): MobileToken!
 }
 
 type Query {
-    broadcastMessages(filter: broadcastMessageFilter): [BroadcastMessage]
-    memberProfile: User!
-    reportedCases(filter: caseReportFilter): [CaseReport]
-    root: String
-    testingSites(filter: testingSiteFilter): [TestingSite]
-    userReportedCases(filter: caseReportFilter): [CaseReport]
-    userVitals(filter: vitalsFilter): [Vitals]
-    users: [User]
-    vitals(filter: vitalsFilter): [Vitals]
+  broadcastMessages(filter: broadcastMessageFilter): [BroadcastMessage]
+  memberProfile: User!
+  reportedCases(filter: caseReportFilter): [CaseReport]
+  root: String
+  testingSites(filter: testingSiteFilter): [TestingSite]
+  userReportedCases(filter: caseReportFilter): [CaseReport]
+  userVitals(filter: vitalsFilter): [Vitals]
+  users: [User]
+  vitals(filter: vitalsFilter): [Vitals]
 }
 
 type SetUserNotificationTokenOutput {
-    success: Boolean!
-    user: User!
+  success: Boolean!
+  user: User!
 }
 
 type TestingSite {
-    _id: ID
-    address: String
-    createdAt: DateTime
-    location: Location
-    name: String
-    placesName: String
-    updatedAt: DateTime
+  _id: ID
+  address: String
+  createdAt: DateTime
+  location: Location
+  name: String
+  placesName: String
+  updatedAt: DateTime
 }
 
 type User {
-    _id: ID
-    age: Int
-    arrivalDate: Date
-    bluetoothID: String
-    caseName: String
-    gender: Gender
-    lastCountriesVisited: [String]
-    lastName: String
-    nationalID: String
-    notificationToken: String
-    otherNames: String
-    phone: PhoneNumber
-    platform: Platform
+  _id: ID
+  age: Int
+  arrivalDate: Date
+  bluetoothID: String
+  caseName: String
+  caseStatus: CaseStatus
+  gender: Gender
+  infectionStatus: InfectionStatus
+  lastCountriesVisited: [String]
+  lastName: String
+  licenseNumber: String
+  nationalID: String
+  notificationToken: String
+  otherNames: String
+  phone: PhoneNumber
+  platform: Platform
+  region: String
 }
 
 type Vitals {
-    _id: ID
-    createdAt: DateTime
-    location: Location
-    updatedAt: DateTime
-    user: User
-    vitals: VitalsDetails
+  _id: ID
+  createdAt: DateTime
+  location: Location
+  updatedAt: DateTime
+  user: User
+  vitals: VitalsDetails
 }
 
 type VitalsDetails {
-    aches: Int
-    dryCough: Int
-    fever: Int
-    shortnessOfBreath: Int
-    soreThroat: Int
-    tiredness: Int
+  aches: Int
+  dryCough: Int
+  fever: Int
+  shortnessOfBreath: Int
+  soreThroat: Int
+  tiredness: Int
 }
 
 enum CacheControlScope {
-    PRIVATE
-    PUBLIC
+  PRIVATE
+  PUBLIC
+}
+
+enum CaseStatus {
+  critical
+  dead
+  recovering
 }
 
 enum Gender {
-    female
-    male
+  female
+  male
+}
+
+enum InfectionStatus {
+  negative
+  positive
+  untested
 }
 
 enum Platform {
-    android
-    ios
-    ussd
-    web
+  android
+  ios
+  ussd
+  web
 }
 
 enum Reporting {
-    individual
-    self
+  individual
+  self
 }
 
 input LocationInput {
-    latitude: Float!
-    longitude: Float!
+  latitude: Float!
+  longitude: Float!
 }
 
 input VitalsInput {
-    aches: Int
-    dryCough: Int
-    fever: Int
-    shortnessOfBreath: Int
-    soreThroat: Int
-    tiredness: Int
+  aches: Int
+  dryCough: Int
+  fever: Int
+  shortnessOfBreath: Int
+  soreThroat: Int
+  tiredness: Int
 }
 
 input addTestingSiteInput {
-    address: String!
-    location: LocationInput
-    name: String!
-    placesName: String!
+  address: String!
+  location: LocationInput
+  name: String!
+  placesName: String!
 }
 
 input ageGroupInput {
-    from: Int
-    to: Int
+  from: Int
+  to: Int
 }
 
 input broadcastMessageFilter {
-    ageGroup: ageGroupInput
-    description: String
-    region: [String]
-    title: String
+  ageGroup: ageGroupInput
+  description: String
+  region: [String]
+  title: String
 }
 
 input broadcastMessageInput {
-    ageGroup: ageGroupInput
-    description: String!
-    region: [String]
-    title: String!
+  ageGroup: ageGroupInput
+  description: String!
+  region: [String]
+  title: String!
 }
 
 input caseReportFilter {
-    alternateContact: String
-    description: String
-    location: String
-    nearestLandmark: String
-    reporting: Reporting
-    user: ID
+  alternateContact: String
+  description: String
+  location: String
+  nearestLandmark: String
+  reporting: Reporting
+  user: ID
 }
 
 input editUserProfileInput {
-    age: Int
-    arrivalDate: Date
-    bluetoothID: String
-    caseName: String
-    gender: Gender
-    lastCountriesVisited: [String]
-    lastName: String
-    nationalID: String
-    notificationToken: String
-    otherNames: String
-    phone: PhoneNumber
-    platform: Platform
+  age: Int
+  arrivalDate: Date
+  bluetoothID: String
+  caseName: String
+  gender: Gender
+  lastCountriesVisited: [String]
+  lastName: String
+  licenseNumber: String
+  nationalID: String
+  notificationToken: String
+  otherNames: String
+  phone: PhoneNumber
+  platform: Platform
 }
 
 input loginUserInput {
-    phone: String!
+  phone: String!
 }
 
 input recordVitalsInput {
-    location: LocationInput
-    vitals: VitalsInput
+  location: LocationInput
+  vitals: VitalsInput
 }
 
 input reportCaseInput {
-    alternateContact: String
-    description: String
-    location: String
-    nearestLandmark: String
-    reporting: Reporting
+  alternateContact: String
+  description: String
+  location: String
+  nearestLandmark: String
+  reporting: Reporting
 }
 
 input setUserNotificationTokenInput {
-    notificationToken: String!
+  notificationToken: String!
 }
 
 input testingSiteFilter {
-    address: String
-    location: LocationInput
-    name: String
-    placesName: String
+  address: String
+  location: LocationInput
+  name: String
+  placesName: String
 }
 
 input validateLoginUserInput {
-    otp: String!
-    phone: String!
+  otp: String!
+  phone: String!
 }
 
 input vitalsFilter {
-    user: ID
+  user: ID
 }
-
 
 scalar Date
 

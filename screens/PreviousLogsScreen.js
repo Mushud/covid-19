@@ -54,8 +54,7 @@ export default function PreviousVitalsLog({ navigation }) {
       {!data.memberProfile.age || !data.memberProfile.gender ? (
         <InfoBox>
           <RegularText style={{ width: '90%' }}>
-            Your age and gender will be essential for analytics and also detecting bad vitals from
-            you.
+            Your age and gender will be essential for analytics and to better assist you
           </RegularText>
           <SVGIcon source={bulb} style={{ alignItems: 'flex-end' }} fill="orange" />
         </InfoBox>

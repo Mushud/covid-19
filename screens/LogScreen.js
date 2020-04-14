@@ -4,6 +4,7 @@ import Colors from '../constants/Colors';
 import styled from 'styled-components';
 import Button from '../components/shared/Button';
 import { gql, useMutation } from '@apollo/client';
+import ChildScreenHeader from '../components/ChildScreenHeader';
 
 const symptoms = [
   { name: 'Dry Cough', key: 0 },
@@ -125,21 +126,11 @@ export default function LogSymptoms({ navigation }) {
     <View
       style={{
         flex: 1,
-        paddingTop: 50,
         paddingHorizontal: 15,
-        backgroundColor: '#eeeeee',
+        backgroundColor: '#ffffff',
       }}
     >
-      <Text style={{ fontFamily: 'bold' }}>Symptoms Logging</Text>
-      <View
-        style={{
-          height: 4,
-          width: 50,
-          backgroundColor: 'black',
-          borderRadius: 20,
-          marginVertical: 10,
-        }}
-      />
+      <ChildScreenHeader title="Log Symptoms" />
       <ScrollView showsVerticalScrollIndicator={false}>
         {symptoms.map((item) => (
           <SymptonContainer>

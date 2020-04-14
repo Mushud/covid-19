@@ -2,41 +2,29 @@ import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { BottomModal, ModalContent } from 'react-native-modals';
 import styled from 'styled-components';
-//import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client';
 import TimeAgo from 'react-native-timeago';
 
 // components
 import LoadingState from '../components/LoadingState';
-import { StyledHeader, StyledText } from '../components/Typography';
+import { BoldText, RegularText, StyledHeader, StyledText } from '../components/Typography';
 import { Ionicons } from '@expo/vector-icons';
-import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 
 const NotificationContext = React.createContext();
-/*
 const query = gql`
   query {
-    memberNotifications {
+    broadcastMessages {
       title
-      message
+      description
       createdAt
-    }
-
-    memberProfile {
-      congregation {
-        name
-      }
     }
   }
 `;
-*/
-const data = {
-    memberNotifications: []
-};
 
 function NotificationProvider({ children }) {
   const [notificationOpen, setNotificationOpen] = useState(false);
-  //const { loading, data } = useQuery(query);
+  const { loading, data } = useQuery(query);
 
   function openNotificationScreen() {
     setNotificationOpen(true);
@@ -55,21 +43,21 @@ function NotificationProvider({ children }) {
         }}
         containerStyle={{ backgroundColor: '#f4f6f8' }}
       >
-        <ModalContent style={{ height: Layout.window.height - 100, backgroundColor: '#f4f6f8' }}>
+        <ModalContent style={{ minHeight: Layout.window.height - 100, backgroundColor: '#fff' }}>
           {!data && loading ? (
             <LoadingState />
           ) : (
             <Container>
               <View style={{ alignItems: 'center', paddingHorizontal: 20 }}>
                 <StyledHeader style={{ fontSize: 16, textAlign: 'center' }}>
-                  Notifications from { /*data.memberProfile.congregation.name*/ 'Ghana Health Services'}
+                  Notifications
                 </StyledHeader>
               </View>
-              {data.memberNotifications.length > 0 ? (
+              {data.broadcastMessages.length > 0 ? (
                 <FlatList
-                  data={data.memberNotifications}
+                  data={data.broadcastMessages}
                   renderItem={renderNotification}
-                  keyExtractor={item => item.createdAt}
+                  keyExtractor={(item) => item.createdAt}
                 />
               ) : (
                 <View
@@ -111,10 +99,8 @@ function renderNotification({ item }) {
     <ListItem>
       <View style={[{ flexDirection: 'row' }]}>
         <View style={{ justifyContent: 'center', width: '80%' }}>
-          <StyledHeader style={{ fontSize: 17, marginBottom: 5, color: Colors.tintColor }}>
-            {item.title}
-          </StyledHeader>
-          <StyledText style={{ fontSize: 16, flexWrap: 'wrap' }}>{item.message}</StyledText>
+          <RegularText size="md">{item.title}</RegularText>
+          <RegularText style={{ flexWrap: 'wrap' }}>{item.message}</RegularText>
         </View>
 
         <View
@@ -134,11 +120,10 @@ function renderNotification({ item }) {
 
 const Container = styled.View`
   flex: 1;
-  background-color: #f4f6f8;
+  background-color: #ffffff;
 `;
 
 const ListItem = styled.View`
-  box-shadow: 0px 12px 5px rgba(213, 213, 213, 0.5);
   background-color: #ffffff;
   border-bottom-width: 0.3px;
   border-bottom-color: #cecece;

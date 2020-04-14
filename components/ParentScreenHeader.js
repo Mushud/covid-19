@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -7,9 +7,12 @@ import { BoldText } from './Typography';
 import Colors from '../constants/Colors';
 import CustomStatusBar from './StatusBar';
 import { Ionicons } from '@expo/vector-icons';
+import { NotificationContext } from '../context/Notification';
 
-function ParentScreenHeaderIos({ title, children }) {
+function ParentScreenHeader({ title, children }) {
   const navigation = useNavigation();
+  const { openNotificationScreen } = useContext(NotificationContext);
+
   return (
     <View
       style={{
@@ -44,7 +47,9 @@ function ParentScreenHeaderIos({ title, children }) {
         </TouchableOpacity>
 
         <View>
-          <Ionicons name="ios-notifications-outline" size={35} />
+          <TouchableOpacity onPress={openNotificationScreen}>
+            <Ionicons name="ios-notifications-outline" size={35} />
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -56,9 +61,9 @@ function ParentScreenHeaderIos({ title, children }) {
   );
 }
 
-ParentScreenHeaderIos.propTypes = {
+ParentScreenHeader.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node,
 };
 
-export default ParentScreenHeaderIos;
+export default ParentScreenHeader;
