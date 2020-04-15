@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 // components
 import { BoldText } from './Typography';
@@ -42,7 +42,10 @@ function ParentScreenHeader({ title, children }) {
               alignItems: 'center',
             }}
           >
-            <BoldText style={{ color: '#ffffff' }}>RA</BoldText>
+            <Image
+              source={require('../assets/images/placeholder-image.png')}
+              style={{ width: '100%', height: '100%'}}
+            />
           </View>
         </TouchableOpacity>
 
