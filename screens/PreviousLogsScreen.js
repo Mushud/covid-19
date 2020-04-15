@@ -128,11 +128,11 @@ export default function PreviousVitalsLog({ navigation }) {
 }
 
 const scale = [
-  { color: 'green', status: 'None' },
-  { color: 'orange', status: 'Mild' },
-  { color: 'orange', status: 'Mid' },
-  { color: 'orange', status: 'Semi' },
-  { color: 'red', status: 'High' },
+  { color: '#7CF7BE', status: 'None' },
+  { color: '#7CDDF7', status: 'Mild' },
+  { color: '#CA7CF7', status: 'Mid' },
+  { color: '#FF8103', status: 'Semi' },
+  { color: '#E80202', status: 'High' },
 ];
 
 function Scale({ value = 0 }) {
