@@ -117,7 +117,7 @@ const Login = ({ navigation }) => {
           </TouchableOpacity>
 
           <View style={{ marginTop: 10 }}>
-            <StyledText>Beta 0.1.2</StyledText>
+            <BoldText style={{ color: "#fff"}}>Beta 0.1.2</BoldText>
           </View>
         </ImageBackground>
       </View>
