@@ -7,7 +7,7 @@ import {
   StatusBar,
 } from 'react-native';
 import Colors from '../../constants/Colors';
-import { BoldText, RegularText } from '../../components/Typography';
+import { BoldText, RegularText, StyledText } from '../../components/Typography';
 import Button from '../../components/FormInput/Button';
 import Input from '../../components/FormInput/Input';
 import { useMutation } from '@apollo/client';
@@ -115,6 +115,10 @@ const Login = ({ navigation }) => {
               )}
             </Button>
           </TouchableOpacity>
+
+          <View style={{ marginTop: 10 }}>
+            <StyledText>Beta 0.1.2</StyledText>
+          </View>
         </ImageBackground>
       </View>
     </KeyboardAwareScrollView>
