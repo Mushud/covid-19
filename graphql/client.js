@@ -3,6 +3,8 @@ import { setContext } from 'apollo-link-context';
 import { retrieveAuthToken } from '../utils';
 import { persistCache } from 'apollo-cache-persist';
 import { AsyncStorage } from 'react-native';
+import { onError } from 'apollo-link-error';
+
 
 module.exports = async () => {
     const httpLink = createHttpLink({
@@ -37,8 +39,28 @@ module.exports = async () => {
         throw new Error(e);
     }
 
+    const authenticationErrorLink = onError(({ graphQLErrors }) => {
+        if (
+          graphQLErrors[0].message === 'Context creation failed: AuthenticationError' ||
+          graphQLErrors[0].message === 'AuthenticationFailure'
+        ) {
+            deleteAuthToken();
+            showMessage({
+                message: 'We failed to authenticate you',
+                description: 'Please wait while we log you back in....',
+                backgroundColor: Colors.tintColor,
+                position: 'bottom',
+                duration: 3000,
+            });
+
+            setTimeout(function () {
+                Updates.reload();
+            }, 3000);
+        }
+    });
+
     return new ApolloClient({
-        link: authLink.concat(httpLink),
+        link: authenticationErrorLink.concat(authLink.concat(httpLink)),
         cache,
         resolvers: {},
         defaultOptions: {

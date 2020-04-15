@@ -22,6 +22,7 @@
     "@react-navigation/web": "~1.0.0-alpha.9",
     "apollo-cache-persist": "^0.1.1",
     "apollo-link-context": "^1.0.19",
+    "apollo-link-error": "^1.1.13",
     "expo": "~36.0.0",
     "expo-asset": "~8.0.0",
     "expo-constants": "~8.0.0",
