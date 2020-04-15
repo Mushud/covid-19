@@ -2,12 +2,10 @@ import React from 'react';
 import { View, ScrollView, Text, ImageBackground, FlatList } from 'react-native';
 
 import styled from 'styled-components';
-import { homeItemsList } from './data';
 import ParentScreenHeader from '../components/ParentScreenHeader';
 import { BoldText, RegularText } from '../components/Typography';
 import { ApolloClient, InMemoryCache, useQuery, gql, createHttpLink } from '@apollo/client';
 import LoadingState from '../components/LoadingState';
-import EmptyCaseReportsState from '../components/EmptyCaseReportsState';
 
 const situationList = [
   {
@@ -68,29 +66,21 @@ const HomeScreen = ({ navigation }) => {
     )
   }
 
-  if(error){
-    return (
-      <View style={{ backgroundColor: '#fff', flex: 1 }}>
-        <ParentScreenHeader title="Home" />
-        <EmptyCaseReportsState/>
-      </View>
-    )
-  }
 
   const summaryData = [
     {
       title: 'Confirmed Cases',
-      content: data.country.result.cases,
+      content: data?.country?.result?.cases || '636',
       bg: require('../assets/images/use-covid.jpeg'),
     },
     {
       title: 'Recovered',
-      content: data.country.result.recovered,
+      content: data?.country?.result?.recovered || '17',
       bg: require('../assets/images/use-covid-2.jpeg'),
     },
     {
       title: 'Deaths',
-      content: data.country.result.deaths,
+      content: data?.country?.result?.deaths || '8',
       bg: require('../assets/images/death.jpeg'),
     },
   ];
