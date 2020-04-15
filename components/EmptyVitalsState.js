@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Platform } from 'react-native';
 import AnimatedItem from './AnimatedItem';
 import { RegularText } from './Typography';
 import Button from './FormInput/Button';
@@ -13,11 +13,13 @@ function EmptyVitalsState() {
     <View
       style={{ justifyContent: 'center', alignItems: 'center', flex: 0.7, paddingHorizontal: 20 }}
     >
-      <AnimatedItem
-        animation={require('../assets/animations/vitals.json')}
-        style={{ height: 150, marginHorizontal: 40 }}
-        loop={true}
-      />
+      {
+        Platform.OS === 'ios' ? <AnimatedItem
+          animation={require('../assets/animations/vitals.json')}
+          style={{ height: 150, marginHorizontal: 40 }}
+          loop={true}
+        /> : null
+      }
       <RegularText style={{ textAlign: 'center', marginBottom: 10, marginTop: 50 }}>
         You have not logged your vitals yet..
       </RegularText>
