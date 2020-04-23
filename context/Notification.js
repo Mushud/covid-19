@@ -8,7 +8,7 @@ import TimeAgo from 'react-native-timeago';
 // components
 import LoadingState from '../components/LoadingState';
 import { BoldText, RegularText, StyledHeader, StyledText } from '../components/Typography';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, EvilIcons } from '@expo/vector-icons';
 import Layout from '../constants/Layout';
 
 const NotificationContext = React.createContext();
@@ -98,15 +98,22 @@ function renderNotification({ item }) {
   return (
     <ListItem>
       <View style={[{ flexDirection: 'row' }]}>
-        <View style={{ justifyContent: 'center', width: '80%' }}>
+
+        <View style={{ flex: 0.19}}>
+          <View style={{ height: 50, width: 50, backgroundColor: '#f1f1f1', justifyContent: 'center', borderRadius: 25, alignItems: 'center'}}>
+            <EvilIcons name="envelope" size={30} color="grey" />
+          </View>
+        </View>
+
+        <View style={{ justifyContent: 'center', flex: 0.65}}>
           <RegularText size="md">{item.title}</RegularText>
-          <RegularText style={{ flexWrap: 'wrap' }}>{item.message}</RegularText>
+          <RegularText style={{ flexWrap: 'wrap' }} numberOfLines={1}>{item.description} </RegularText>
         </View>
 
         <View
           style={{
             alignItems: 'flex-end',
-            width: '20%',
+            flex: 0.2
           }}
         >
           <StyledText style={{ fontSize: 10 }}>
@@ -129,8 +136,6 @@ const ListItem = styled.View`
   border-bottom-color: #cecece;
   align-items: center;
   justify-content: space-between;
-  margin-vertical: 15px;
-  margin-horizontal: 10px;
   padding: 10px;
   border-radius: 10px;
 `;

@@ -7,13 +7,15 @@ import {
   StatusBar,
 } from 'react-native';
 import Colors from '../../constants/Colors';
-import { BoldText, RegularText, StyledText } from '../../components/Typography';
+import { BoldText, RegularText } from '../../components/Typography';
 import Button from '../../components/FormInput/Button';
 import Input from '../../components/FormInput/Input';
 import { useMutation } from '@apollo/client';
 import { loginUserMutation } from '../../graphql/mutations';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { showMessage } from 'react-native-flash-message';
+import CountryPicker from 'react-native-country-picker-modal';
+import styled from 'styled-components';
 
 const imgOption1 = require('../../assets/images/use-covid.jpeg');
 
@@ -21,6 +23,12 @@ const Login = ({ navigation }) => {
   StatusBar.setBarStyle('light-content');
 
   // states........
+
+  const [countryCode, setCountryCode] = React.useState('GH');
+  const onCountrySelect = country => {
+    setCountryCode(country.cca2);
+  };
+
   const [phone, setPhone] = useState('');
   const [loginMember, { loading }] = useMutation(loginUserMutation, {
     variables: {
@@ -86,14 +94,84 @@ const Login = ({ navigation }) => {
             Join the effort by well-meaning Africans using technology to slow down and eventually
             halt the spread of COVID-19
           </RegularText>
-          <Input
-            placeholderLabel="Phone Number"
-            placeholderTextColor={Colors.tintColor}
-            value={phone}
-            onChangeText={setPhone}
-            keyboardType="numeric"
-            maxLength={10}
-          />
+          <View style={{ flexDirection: 'row',}}>
+            <View style={{ flex: 0.2, justifyContent: 'center', alignItems: 'center', height: 50, marginTop: 10, backgroundColor: '#e9e9e9'}}>
+              <CountryPicker
+              countryCode={countryCode}
+              withCallingCode={true}
+              countryCodes={[
+                'DZ',
+                'AO',
+                'BJ',
+                'BW',
+                'BF',
+                'BI',
+                'CM',
+                'CV',
+                'CF',
+                'TD',
+                'KM',
+                'CG',
+                'CD',
+                'CI',
+                'DJ',
+                'EG',
+                'GQ',
+                'ER',
+                'ET',
+                'GA',
+                'GM',
+                'GH',
+                'GN',
+                'GW',
+                'KE',
+                'LS',
+                'LR',
+                'LY',
+                'MG',
+                'MW',
+                'ML',
+                'MR',
+                'MU',
+                'YT',
+                'MA',
+                'MZ',
+                'NA',
+                'NE',
+                'NG',
+                'RW',
+                'ST',
+                'SN',
+                'SC',
+                'SL',
+                'SO',
+                'ZA',
+                'SS',
+                'SZ',
+                'TZ',
+                'TG',
+                'TN',
+                'UG',
+                'ZM',
+                'ZW'
+              ]}
+              withFlag={true}
+              onSelect={onCountrySelect}
+              visible={false}
+            />
+            </View>
+            <View style={{ flex: 0.8}}>
+              <Input
+                textSize={18}
+                placeholderLabel="Phone Number"
+                placeholderTextColor={Colors.tintColor}
+                value={phone}
+                onChangeText={setPhone}
+                keyboardType="numeric"
+                maxLength={10}
+              />
+            </View>
+          </View>
 
           <TouchableOpacity
             disabled={phone.length < 10 || Number(phone.charAt(0)) !== 0}
@@ -124,5 +202,15 @@ const Login = ({ navigation }) => {
     </KeyboardAwareScrollView>
   );
 };
+
+const CountryOption = styled.View`
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 5px;
+  margin: 5px 0;
+  flex: 1;
+  background: #385c78;
+`;
 
 export default Login;

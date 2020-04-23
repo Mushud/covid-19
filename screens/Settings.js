@@ -11,15 +11,33 @@ function Settings({ navigation }) {
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
       <ParentScreenHeader title="Settings" />
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <SettingsItemContainer>
+          <TouchableOpacity onPress={() => navigation.navigate('WorldStatistics')}>
+            <SettingsItem>
+              <View>
+                <BoldText size="md">World Statistics</BoldText>
+                <RegularText>Get real-time overview of the pandemic worldwide </RegularText>
+              </View>
+              <Ionicons name="ios-arrow-forward" size={20} />
+            </SettingsItem>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Assessment')}>
+            <SettingsItem>
+              <View>
+                <BoldText size="md">Self Assessment</BoldText>
+                <RegularText>Ascertain your covid-19 risk using our screening tool </RegularText>
+              </View>
+              <Ionicons name="ios-arrow-forward" size={20} />
+            </SettingsItem>
+          </TouchableOpacity>
+
           <TouchableOpacity onPress={() => navigation.navigate('FAQ')}>
             <SettingsItem>
               <View>
                 <BoldText size="md">FAQs</BoldText>
                 <RegularText>Get answers to Frequently Asked Questions</RegularText>
               </View>
-
               <Ionicons name="ios-arrow-forward" size={20} />
             </SettingsItem>
           </TouchableOpacity>
@@ -57,7 +75,7 @@ function Settings({ navigation }) {
             </SettingsItem>
           </TouchableOpacity>
 
-          <TouchableOpacity onLongPress={deleteAuthToken}>
+          <TouchableOpacity onLongPress={deleteAuthToken} onPress={() => navigation.navigate('PrivacyPolicy')}>
             <SettingsItem>
               <View>
                 <BoldText size="md">Privacy Policy</BoldText>

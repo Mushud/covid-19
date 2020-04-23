@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { RegularText, StyledSubtitle } from '../Typography';
 
-function Input({ placeholderLabel, placeholderPrefix, placeholderTextColor, ...props }) {
+function Input({ placeholderLabel, placeholderPrefix, placeholderTextColor, textSize, ...props }) {
   return (
     <View
       style={{
@@ -36,7 +36,7 @@ function Input({ placeholderLabel, placeholderPrefix, placeholderTextColor, ...p
           fontFamily: 'regular',
           color: '#222222',
           paddingVertical: 12,
-          fontSize: 14,
+          fontSize: textSize ? textSize : 14,
         }}
         {...props}
       />

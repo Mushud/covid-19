@@ -52,6 +52,7 @@ BoldText.defaultProps = {
 const fontStyles = {
   sm: Platform.OS === 'ios' ? iOSUIKit.footnote : material.body1,
   md: Platform.OS === 'ios' ? iOSUIKit.body : material.headline,
+  mlg: Platform.OS === 'ios' ? iOSUIKit.title3Emphasized : material.headline,
   lg: Platform.OS === 'ios' ? iOSUIKit.largeTitleEmphasized : material.display1,
 };
 

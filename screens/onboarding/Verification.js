@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, TextInput, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native';
 import { BoldText, RegularText } from '../../components/Typography';
 import { useMutation } from '@apollo/client';
 import { validateLoginMutation } from '../../graphql/mutations';
@@ -13,6 +13,7 @@ import SVGIcon from '../../components/SVGIcon';
 import { backIcon } from '../../assets/icons';
 
 function VerifyScreen({ navigation, route }) {
+  StatusBar.setBarStyle('dark-content');
   const phone = route.params?.phone;
   const [otp, setOTP] = useState('');
   const [validateLoginMember, { loading }] = useMutation(validateLoginMutation, {

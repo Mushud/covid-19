@@ -13,6 +13,10 @@ import CaseReports from '../screens/CaseReports';
 import SettingsScreen from '../screens/Settings';
 import TestingCentersScreen from '../screens/TestingCenters';
 import { RegularText } from '../components/Typography';
+import AssessmentIntroduction from '../screens/assessment/Introduction';
+import SingleSelectQuestion from '../screens/assessment/SingleSelectQuestion';
+import WorldStatistics from '../screens/WorldStatistics';
+import PrivacyPolicy from '../screens/PrivacyPolicy';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -60,6 +64,19 @@ const CaseReportsStack = () => (
   </Stack.Navigator>
 );
 
+const AssessmentStack = () => (
+  <Stack.Navigator
+    headerMode="none"
+    screenOptions={{
+      ...TransitionPresets.SlideFromRightIOS,
+      cardOverlayEnabled: true,
+    }}
+  >
+    <Stack.Screen name="AssessmentIntroduction" component={AssessmentIntroduction} />
+    <Stack.Screen name="SingleSelectQuestion" component={SingleSelectQuestion} />
+  </Stack.Navigator>
+);
+
 const SettingsStack = () => (
   <Stack.Navigator
     headerMode="none"
@@ -69,11 +86,16 @@ const SettingsStack = () => (
     }}
   >
     <Stack.Screen name="Settings" component={SettingsScreen} />
+    <Stack.Screen name="Assessment" component={AssessmentStack} />
+    <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
     <Stack.Screen name="FAQ" component={FAQScreen} />
+    <Stack.Screen name="WorldStatistics" component={WorldStatistics} />
     <Stack.Screen name="TestingCenters" component={TestingCentersScreen} />
     <Stack.Screen name="Profile" component={ProfileScreen} />
   </Stack.Navigator>
 );
+
+
 
 export default function BottomTabNavigator({ navigation, route }) {
   StatusBar.setBarStyle('dark-content');

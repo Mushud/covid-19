@@ -203,10 +203,10 @@ const FAQScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
       <ChildScreenHeader title="FAQ" />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ paddingBottom: 30 }}>
+        <View style={{ paddingBottom: 30, backgroundColor: '#e9e9e9' }}>
           <Accordion
             sections={faqs}
             activeSections={activeSections}

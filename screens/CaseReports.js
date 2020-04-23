@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
+import { EvilIcons } from '@expo/vector-icons';
 
 // components
 import { BoldText, RegularText } from '../components/Typography';
@@ -19,6 +20,7 @@ const query = gql`
       nearestLandmark
       alternateContact
       reporting
+      location
       description
       createdAt
     }
@@ -53,27 +55,39 @@ export default function CaseReports({ navigation }) {
             renderItem={({ item }) => (
               <Card>
                 <Row>
-                  <BoldText>{item.reporting[0].toUpperCase() + item.reporting.slice(1)}</BoldText>
-                  <RegularText>{new Date(item.createdAt).toDateString()}</RegularText>
+                  <View>
+                    <BoldText>{item.reporting[0].toUpperCase() + item.reporting.slice(1)}</BoldText>
+                  </View>
+                    <BoldText>{new Date(item.createdAt).toDateString()}</BoldText>
                 </Row>
 
                 <Row style={{ marginTop: 10 }}>
                   <RegularText style={{ color: Colors.tintColor }}>{item.description}</RegularText>
                 </Row>
 
-                <Row>
-                  <RegularText style={{ color: Colors.tintColor }}>
-                    {item.alternateContact}
-                  </RegularText>
-                </Row>
+                <View style={{ marginTop: 10, flexDirection: 'row'}}>
+                  <View style={{ justifyContent: 'center', flex: 0.15}}>
+                    <EvilIcons name="location" size={25} />
+                  </View>
+                  <View>
+                    <RegularText style={{ color: Colors.tintColor }}>
+                      {item.nearestLandmark}
+                    </RegularText>
+                    <RegularText style={{ color: Colors.tintColor }}>
+                      {item.location}
+                    </RegularText>
+                  </View>
+                </View>
               </Card>
             )}
           />
-          <FAB>
-            <TouchableOpacity onPress={() => navigation.navigate('MakeCaseReport')}>
-              <Ionicons name="ios-add" color="#fff" size={20} />
-            </TouchableOpacity>
-          </FAB>
+          <TouchableOpacity onPressIn={() => navigation.navigate('MakeCaseReport')}>
+            <View style={{margin: 10}}>
+              <FAB>
+                <Ionicons name="ios-add" color="#fff" size={30} />
+              </FAB>
+            </View>
+        </TouchableOpacity>
         </>
       )}
     </Container>
@@ -86,7 +100,7 @@ const Container = styled.View`
 `;
 const Card = styled.View`
   margin-top: 15px;
-  padding: 25px 20px;
+  padding: 15px 20px;
   border-bottom-color: #e3e3e3;
   border-bottom-width: 0.5px;
 `;

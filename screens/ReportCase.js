@@ -40,20 +40,21 @@ const reportCaseMutation = gql`
 
 const reportedCasesQuery = gql`
   query {
-    userReportedCases {
-      _id
-      nearestLandmark
-      alternateContact
-      reporting
-      description
-      createdAt
-    }
+      userReportedCases {
+          _id
+          nearestLandmark
+          alternateContact
+          reporting
+          location
+          description
+          createdAt
+      }
   }
 `;
 
 const options = [
   { title: 'Self', value: 'self' },
-  { title: 'Other Individual', value: 'other' },
+  { title: 'Other Individual', value: 'individual' },
 ];
 
 const ReportCase = ({ navigation }) => {

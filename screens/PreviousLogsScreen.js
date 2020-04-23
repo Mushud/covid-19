@@ -116,11 +116,13 @@ export default function PreviousVitalsLog({ navigation }) {
               </View>
             )}
           />
-          <FAB>
-            <TouchableOpacity onPress={() => navigation.navigate('VitalsLog')}>
-              <Ionicons name="ios-add" color="#ffffff" size={30} />
-            </TouchableOpacity>
-          </FAB>
+          <TouchableOpacity onPressIn={() => navigation.navigate('VitalsLog')}>
+            <View style={{margin: 10}}>
+              <FAB>
+                <Ionicons name="ios-add" color="#fff" size={30} />
+              </FAB>
+            </View>
+          </TouchableOpacity>
         </View>
       )}
     </View>
