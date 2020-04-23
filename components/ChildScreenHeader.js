@@ -20,9 +20,10 @@ function ChildScreenHeader({ title }) {
 
   return (
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20 }}>
-      <BoldText size="lg">{title}</BoldText>
+      <View/>
+      <BoldText size="md">{title}</BoldText>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Ionicons name="ios-close" size={35} />
+        <Ionicons name="ios-close" size={25} />
       </TouchableOpacity>
     </View>
   );

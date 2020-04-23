@@ -3163,6 +3163,14 @@ expo-asset@~8.0.0:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-av@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-8.0.0.tgz#fc892a0e4ff7e1eff630002e0652da3125d18113"
+  integrity sha512-n1qOXi0jk6stY4q5RZqmQS90Rg9HDDGWE7EfLABhcyUA1EGJJbrupjpn75sxzNYMksad+oiGp0NULTHlKfa01A==
+  dependencies:
+    lodash "^4.17.15"
+    nullthrows "^1.1.0"
+
 expo-constants@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-8.0.0.tgz#e2c5a072dacb4263ccfc57dcb4835ca791960d48"
@@ -3227,6 +3235,11 @@ expo-svg-uri@^1.1.0:
   dependencies:
     react-native-svg "^9.9.4"
     xmldom "^0.1.27"
+
+expo-video-thumbnails@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/expo-video-thumbnails/-/expo-video-thumbnails-4.0.0.tgz#d9e6e6387c1f7b1f36d8d02b564fc54ebe22111a"
+  integrity sha512-X9ciy0mh1NX00IhS0hGEIW5Vtc3gI8i7nUk0nSXL2tKfp++fhqaYP5wUhmAMKcV7ONkCjiNhcW4sQO9Y4yEZWA==
 
 expo-web-browser@~8.0.0:
   version "8.0.0"

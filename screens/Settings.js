@@ -64,11 +64,11 @@ function Settings({ navigation }) {
             </SettingsItem>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Media')}>
             <SettingsItem>
               <View>
-                <BoldText size="md">Audio</BoldText>
-                <RegularText>Listen to audio</RegularText>
+                <BoldText size="md">Media Center</BoldText>
+                <RegularText>Listen to audio and video</RegularText>
               </View>
 
               <Ionicons name="ios-arrow-forward" size={20} />

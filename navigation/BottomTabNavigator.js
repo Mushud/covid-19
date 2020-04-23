@@ -16,6 +16,8 @@ import { RegularText } from '../components/Typography';
 import AssessmentIntroduction from '../screens/assessment/Introduction';
 import SingleSelectQuestion from '../screens/assessment/SingleSelectQuestion';
 import WorldStatistics from '../screens/WorldStatistics';
+import MediaScreen from '../screens/MediaScreen';
+import PlayerScreen from '../screens/PlayerScreen';
 import PrivacyPolicy from '../screens/PrivacyPolicy';
 
 const BottomTab = createBottomTabNavigator();
@@ -87,6 +89,8 @@ const SettingsStack = () => (
   >
     <Stack.Screen name="Settings" component={SettingsScreen} />
     <Stack.Screen name="Assessment" component={AssessmentStack} />
+    <Stack.Screen name="Media" component={MediaScreen} />
+    <Stack.Screen name="Player" component={PlayerScreen} />
     <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
     <Stack.Screen name="FAQ" component={FAQScreen} />
     <Stack.Screen name="WorldStatistics" component={WorldStatistics} />
