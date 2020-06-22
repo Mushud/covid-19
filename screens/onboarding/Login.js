@@ -25,27 +25,20 @@ const Login = ({ navigation }) => {
   // states........
 
   const [countryCode, setCountryCode] = React.useState('GH');
-  const onCountrySelect = country => {
+  const onCountrySelect = (country) => {
     setCountryCode(country.cca2);
   };
 
   const [phone, setPhone] = useState('');
-  const [loginMember, { loading }] = useMutation(loginUserMutation, {
-    variables: {
-      phone,
-    },
-    onCompleted: (data) => {
+  const [loading, setLoading] = useState(false);
+
+  function loginMember() {
+    setLoading(true);
+    setTimeout(() => {
       navigation.navigate('Verification', { phone });
-    },
-    onError: ({ graphQLErrors, networkError }) => {
-      console.log('Error occurred', graphQLErrors, networkError);
-      showMessage({
-        type: 'warning',
-        message: 'Oops, error occurred',
-        description: 'Please check your network connection and try again',
-      });
-    },
-  });
+      setLoading(false);
+    }, 3000);
+  }
 
   return (
     <KeyboardAwareScrollView
@@ -76,7 +69,8 @@ const Login = ({ navigation }) => {
                 fontSize: 70,
               }}
             >
-              COVERS
+              CO
+              <BoldText style={{ color: 'red', textAlign: 'center', fontSize: 70 }}>VERS</BoldText>
             </BoldText>
             <BoldText style={{ color: '#fff', textAlign: 'center' }} size="sm">
               (COVID-19 EMERGENCY RESPONSE SOLUTION)
@@ -94,73 +88,85 @@ const Login = ({ navigation }) => {
             Join the effort by well-meaning Africans using technology to slow down and eventually
             halt the spread of COVID-19
           </RegularText>
-          <View style={{ flexDirection: 'row',}}>
-            <View style={{ flex: 0.2, justifyContent: 'center', alignItems: 'center', height: 50, marginTop: 10, backgroundColor: '#e9e9e9'}}>
+          <View style={{ flexDirection: 'row', borderRadius: 10 }}>
+            <View
+              style={{
+                flex: 0.2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 50,
+                marginTop: 10,
+                backgroundColor: '#e9e9e9',
+                borderTopLeftRadius: 15,
+
+                marginRight: 10,
+              }}
+            >
               <CountryPicker
-              countryCode={countryCode}
-              withCallingCode={true}
-              countryCodes={[
-                'DZ',
-                'AO',
-                'BJ',
-                'BW',
-                'BF',
-                'BI',
-                'CM',
-                'CV',
-                'CF',
-                'TD',
-                'KM',
-                'CG',
-                'CD',
-                'CI',
-                'DJ',
-                'EG',
-                'GQ',
-                'ER',
-                'ET',
-                'GA',
-                'GM',
-                'GH',
-                'GN',
-                'GW',
-                'KE',
-                'LS',
-                'LR',
-                'LY',
-                'MG',
-                'MW',
-                'ML',
-                'MR',
-                'MU',
-                'YT',
-                'MA',
-                'MZ',
-                'NA',
-                'NE',
-                'NG',
-                'RW',
-                'ST',
-                'SN',
-                'SC',
-                'SL',
-                'SO',
-                'ZA',
-                'SS',
-                'SZ',
-                'TZ',
-                'TG',
-                'TN',
-                'UG',
-                'ZM',
-                'ZW'
-              ]}
-              withFlag={true}
-              onSelect={onCountrySelect}
-              visible={false}
-            />
+                countryCode={countryCode}
+                withCallingCode={true}
+                countryCodes={[
+                  'DZ',
+                  'AO',
+                  'BJ',
+                  'BW',
+                  'BF',
+                  'BI',
+                  'CM',
+                  'CV',
+                  'CF',
+                  'TD',
+                  'KM',
+                  'CG',
+                  'CD',
+                  'CI',
+                  'DJ',
+                  'EG',
+                  'GQ',
+                  'ER',
+                  'ET',
+                  'GA',
+                  'GM',
+                  'GH',
+                  'GN',
+                  'GW',
+                  'KE',
+                  'LS',
+                  'LR',
+                  'LY',
+                  'MG',
+                  'MW',
+                  'ML',
+                  'MR',
+                  'MU',
+                  'YT',
+                  'MA',
+                  'MZ',
+                  'NA',
+                  'NE',
+                  'NG',
+                  'RW',
+                  'ST',
+                  'SN',
+                  'SC',
+                  'SL',
+                  'SO',
+                  'ZA',
+                  'SS',
+                  'SZ',
+                  'TZ',
+                  'TG',
+                  'TN',
+                  'UG',
+                  'ZM',
+                  'ZW',
+                ]}
+                withFlag={true}
+                onSelect={onCountrySelect}
+                visible={false}
+              />
             </View>
-            <View style={{ flex: 0.8}}>
+            <View style={{ flex: 0.8 }}>
               <Input
                 textSize={18}
                 placeholderLabel="Phone Number"
@@ -180,6 +186,8 @@ const Login = ({ navigation }) => {
           >
             <Button
               style={{
+                borderBottomLeftRadius: 15,
+                borderBottomRightRadius: 15,
                 backgroundColor:
                   phone.length === 10 && Number(phone.charAt(0)) === 0 ? '#48bb78' : '#7f7f7f',
               }}
@@ -193,10 +201,6 @@ const Login = ({ navigation }) => {
               )}
             </Button>
           </TouchableOpacity>
-
-          <View style={{ marginTop: 10 }}>
-            <BoldText style={{ color: "#fff"}}>Beta 0.1.2</BoldText>
-          </View>
         </ImageBackground>
       </View>
     </KeyboardAwareScrollView>

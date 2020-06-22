@@ -16,7 +16,7 @@ function ParentScreenHeader({ title, children }) {
   return (
     <View
       style={{
-        backgroundColor: Colors.backgroundColor,
+        backgroundColor: '#18b88d',
         borderBottomColor: '#e3e3e3',
         borderBottomWidth: 0.5,
       }}
@@ -44,21 +44,22 @@ function ParentScreenHeader({ title, children }) {
           >
             <Image
               source={require('../assets/images/placeholder-image.png')}
-              style={{ width: '100%', height: '100%'}}
+              style={{
+                width: '100%',
+                height: '100%',
+                borderColor: 'white',
+                borderWidth: 5,
+                borderRadius: 50,
+              }}
             />
           </View>
         </TouchableOpacity>
-
-        <View>
-          <TouchableOpacity onPress={openNotificationScreen}>
-            <Ionicons name="ios-notifications-outline" size={35} />
-          </TouchableOpacity>
+        <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
+          <BoldText style={{ color: 'white' }} size="lg">
+            {title}
+          </BoldText>
+          {children ? children : null}
         </View>
-      </View>
-
-      <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
-        <BoldText size="lg">{title}</BoldText>
-        {children ? children : null}
       </View>
     </View>
   );

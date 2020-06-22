@@ -6,6 +6,7 @@ import ParentScreenHeader from '../components/ParentScreenHeader';
 import { BoldText, RegularText } from '../components/Typography';
 import { ApolloClient, InMemoryCache, useQuery, gql, createHttpLink } from '@apollo/client';
 import LoadingState from '../components/LoadingState';
+import WorldStatistics from './WorldStatistics';
 
 const situationList = [
   {
@@ -24,59 +25,67 @@ const situationList = [
 
 const covidTrackerGraphqlClient = new ApolloClient({
   link: createHttpLink({
-    uri: 'https://covid19-graphql.netlify.com'
+    uri: 'https://covid19-graphql.netlify.app',
   }),
   cache: new InMemoryCache(),
 });
 
-
 const ghanaCasesQuery = gql`
-    query {
-        country(name:"Ghana") {
-            country
-            result {
-                tests
-                cases
-                todayCases
-                deaths
-                todayDeaths
-                recovered
-                active
-                critical
-                casesPerOneMillion
-                deathsPerOneMillion
-                testsPerOneMillion
-                updated
-            }
-        }
+  query {
+    country(name: "Ghana") {
+      country
+      result {
+        tests
+        cases
+        todayCases
+        deaths
+        todayDeaths
+        recovered
+        active
+        critical
+        casesPerOneMillion
+        deathsPerOneMillion
+        testsPerOneMillion
+        updated
+      }
     }
-`
+  }
+`;
 
 const HomeScreen = ({ navigation }) => {
   const { loading, data, error } = useQuery(ghanaCasesQuery, {
-    client: covidTrackerGraphqlClient
+    client: covidTrackerGraphqlClient,
   });
 
-  if(loading && !data){
+  if (error) {
+    alert(error);
+  }
+
+  if (loading && !data) {
     return (
       <View style={{ backgroundColor: '#fff', flex: 1 }}>
         <ParentScreenHeader title="Home" />
-        <LoadingState/>
+        <LoadingState />
       </View>
-    )
+    );
   }
-
 
   const summaryData = [
     {
       title: 'Confirmed Cases',
       content: data?.country?.result?.cases || '636',
-      bg: require('../assets/images/use-covid.jpeg'),
+      bg: {
+        uri:
+          'https://www.hamilton-medical.com/.imaging/stk/hamilton-theme/text-backgroundimage-tablet/dam/Images/A-Pictures/Home/covid-19-header-2000x769.jpg/jcr:content/covid-19-header-2000x769.jpg.2020-03-20-09-55-30.jpg',
+      },
     },
     {
       title: 'Recovered',
       content: data?.country?.result?.recovered || '17',
-      bg: require('../assets/images/use-covid-2.jpeg'),
+      bg: {
+        uri:
+          'https://risingnepaldaily.com/banner_image/5e80578f9a74d_5e803fd29ec27_corona_virus.jpg',
+      },
     },
     {
       title: 'Deaths',
@@ -116,12 +125,7 @@ const HomeScreen = ({ navigation }) => {
               marginTop: 10,
             }}
           >
-            <FlatList
-              data={summaryData}
-              showsHorizontalScrollIndicator={false}
-              renderItem={SituationItemCard}
-              keyExtractor={(item) => item.title}
-            />
+            <WorldStatistics />
           </View>
         </View>
       </ScrollView>

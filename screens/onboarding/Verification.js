@@ -16,34 +16,51 @@ function VerifyScreen({ navigation, route }) {
   StatusBar.setBarStyle('dark-content');
   const phone = route.params?.phone;
   const [otp, setOTP] = useState('');
-  const [validateLoginMember, { loading }] = useMutation(validateLoginMutation, {
-    onError: () => {
-      console.log('An error occurred');
-      showMessage({
-        type: 'warning',
-        message: 'You entered an incorrect PIN',
-        description:
-          'Please check the pin sent to you to verify and try again. If you have not received the pin, tap the resend option or verify your phone number to be sure its correct',
-      });
-    },
-    onCompleted: async (data) => {
-      if (!data) {
-        showMessage({
-          backgroundColor: Colors.tintColor,
-          textStyle: { fontFamily: 'regular' },
-          duration: 3000,
-          position: 'bottom',
-          message: 'You entered an incorrect PIN',
-          description:
-            'Please check the pin sent to you to verify and try again. If you have not received the pin, tap the resend option or verify your phone number to be sure its correct',
-        });
+  const [loading, setLoading] = useState(false);
+
+  async function validateLoginMember() {
+    setLoading(true);
+    setTimeout(async () => {
+      if (otp !== '1234') {
+        alert('Invalid Pin');
+        setLoading(false);
         return;
+      } else {
+        await saveAuthToken('mushud31242342342');
+        navigation.navigate('Home');
+        setLoading(false);
       }
-      console.log('token', data.validateLoginUser.mobileToken);
-      await saveAuthToken(data.validateLoginUser.mobileToken);
-      navigation.navigate('InformationScreen');
-    },
-  });
+    }, 3000);
+  }
+
+  // const [validateLoginMember, { loading }] = useMutation(validateLoginMutation, {
+  //   onError: () => {
+  //     console.log('An error occurred');
+  //     showMessage({
+  //       type: 'warning',
+  //       message: 'You entered an incorrect PIN',
+  //       description:
+  //         'Please check the pin sent to you to verify and try again. If you have not received the pin, tap the resend option or verify your phone number to be sure its correct',
+  //     });
+  //   },
+  //   onCompleted: async (data) => {
+  //     if (!data) {
+  //       showMessage({
+  //         backgroundColor: Colors.tintColor,
+  //         textStyle: { fontFamily: 'regular' },
+  //         duration: 3000,
+  //         position: 'bottom',
+  //         message: 'You entered an incorrect PIN',
+  //         description:
+  //           'Please check the pin sent to you to verify and try again. If you have not received the pin, tap the resend option or verify your phone number to be sure its correct',
+  //       });
+  //       return;
+  //     }
+  //     // console.log('token', data.validateLoginUser.mobileToken);
+  //     await saveAuthToken(data.validateLoginUser.mobileToken);
+  //     navigation.navigate('InformationScreen');
+  //   },
+  // });
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{
@@ -103,6 +120,7 @@ function VerifyScreen({ navigation, route }) {
               style={{
                 borderColor: Colors.tintColor,
                 borderWidth: 1,
+                backgroundColor: 'green',
               }}
             >
               {loading ? (
@@ -124,13 +142,8 @@ function VerifyScreen({ navigation, route }) {
     </KeyboardAwareScrollView>
   );
 
-  function onPressSubmit() {
-    validateLoginMember({
-      variables: {
-        phone,
-        otp,
-      },
-    });
+  async function onPressSubmit() {
+    await validateLoginMember();
   }
 }
 

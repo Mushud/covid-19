@@ -42,17 +42,6 @@ function Settings({ navigation }) {
             </SettingsItem>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('TestingCenters')}>
-            <SettingsItem>
-              <View>
-                <BoldText size="md">Testing Centers</BoldText>
-                <RegularText>View testing centers near you</RegularText>
-              </View>
-
-              <Ionicons name="ios-arrow-forward" size={20} />
-            </SettingsItem>
-          </TouchableOpacity>
-
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <SettingsItem>
               <View>
@@ -64,18 +53,10 @@ function Settings({ navigation }) {
             </SettingsItem>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Media')}>
-            <SettingsItem>
-              <View>
-                <BoldText size="md">Media Center</BoldText>
-                <RegularText>Listen to audio and video</RegularText>
-              </View>
-
-              <Ionicons name="ios-arrow-forward" size={20} />
-            </SettingsItem>
-          </TouchableOpacity>
-
-          <TouchableOpacity onLongPress={deleteAuthToken} onPress={() => navigation.navigate('PrivacyPolicy')}>
+          <TouchableOpacity
+            onLongPress={deleteAuthToken}
+            onPress={() => navigation.navigate('PrivacyPolicy')}
+          >
             <SettingsItem>
               <View>
                 <BoldText size="md">Privacy Policy</BoldText>

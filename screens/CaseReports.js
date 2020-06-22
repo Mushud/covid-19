@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 
@@ -28,7 +28,9 @@ const query = gql`
 `;
 
 export default function CaseReports({ navigation }) {
-  const { loading, data, refetch } = useQuery(query);
+  // const { loading, data, refetch } = useQuery(query);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   if (loading) {
     return (
@@ -42,7 +44,7 @@ export default function CaseReports({ navigation }) {
   return (
     <Container>
       <ParentScreenHeaderIos title="Case Reports" />
-      {!data.userReportedCases.length ? (
+      {!data.length ? (
         <EmptyCaseReportsState />
       ) : (
         <>
@@ -50,7 +52,7 @@ export default function CaseReports({ navigation }) {
             showsVerticalScrollIndicator={false}
             onRefresh={() => refetch()}
             refreshing={loading}
-            data={data.userReportedCases}
+            data={data}
             keyExtractor={(item) => item.createdAt}
             renderItem={({ item }) => (
               <Card>
@@ -58,36 +60,34 @@ export default function CaseReports({ navigation }) {
                   <View>
                     <BoldText>{item.reporting[0].toUpperCase() + item.reporting.slice(1)}</BoldText>
                   </View>
-                    <BoldText>{new Date(item.createdAt).toDateString()}</BoldText>
+                  <BoldText>{new Date(item.createdAt).toDateString()}</BoldText>
                 </Row>
 
                 <Row style={{ marginTop: 10 }}>
                   <RegularText style={{ color: Colors.tintColor }}>{item.description}</RegularText>
                 </Row>
 
-                <View style={{ marginTop: 10, flexDirection: 'row'}}>
-                  <View style={{ justifyContent: 'center', flex: 0.15}}>
+                <View style={{ marginTop: 10, flexDirection: 'row' }}>
+                  <View style={{ justifyContent: 'center', flex: 0.15 }}>
                     <EvilIcons name="location" size={25} />
                   </View>
                   <View>
                     <RegularText style={{ color: Colors.tintColor }}>
                       {item.nearestLandmark}
                     </RegularText>
-                    <RegularText style={{ color: Colors.tintColor }}>
-                      {item.location}
-                    </RegularText>
+                    <RegularText style={{ color: Colors.tintColor }}>{item.location}</RegularText>
                   </View>
                 </View>
               </Card>
             )}
           />
           <TouchableOpacity onPressIn={() => navigation.navigate('MakeCaseReport')}>
-            <View style={{margin: 10}}>
+            <View style={{ margin: 10 }}>
               <FAB>
                 <Ionicons name="ios-add" color="#fff" size={30} />
               </FAB>
             </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
         </>
       )}
     </Container>
